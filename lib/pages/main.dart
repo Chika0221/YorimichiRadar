@@ -16,16 +16,20 @@ class MyApp extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final brightness = View.of(context).platformDispatcher.platformBrightness;
 
-    TextTheme textTheme = createTextTheme(
-      context,
-      "Noto Sans JP",
-      "Noto Sans JP",
-    );
+    // TextTheme textTheme = createTextTheme(
+    //   context,
+    //   "Noto Sans JP",
+    //   "Noto Sans JP",
+    // );
+
+    TextTheme textTheme = Theme.of(context).textTheme;
 
     MaterialTheme theme = MaterialTheme(textTheme);
 
     return MaterialApp(
-      theme: brightness == Brightness.light ? theme.light() : theme.dark(),
+      themeMode: ThemeMode.system,
+      theme: theme.light(),
+      darkTheme: theme.dark(),
       home: MainPage(),
     );
   }
