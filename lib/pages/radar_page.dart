@@ -4,23 +4,14 @@ import 'package:flutter/material.dart';
 // Package imports:
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
+// Project imports:
+import 'package:yorimichi_radar/state/compass_provider.dart';
+import 'package:yorimichi_radar/widgets/radar/radar.dart';
+
 class RadarPage extends HookConsumerWidget {
   const RadarPage({super.key});
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final radarDiameter = MediaQuery.of(context).size.width - 128;
-
-    return Scaffold(
-      body: Center(
-        child: Container(
-          height: radarDiameter,
-          width: radarDiameter,
-          decoration: BoxDecoration(
-            shape: BoxShape.circle,
-            color: Colors.amber,
-          ),
-        ),
-      ),
-    );
+    return Scaffold(body: Center(child: Radar()));
   }
 }
