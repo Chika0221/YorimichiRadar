@@ -6,12 +6,12 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 // Project imports:
 import 'package:yorimichi_radar/state/compass_provider.dart';
-import 'package:yorimichi_radar/widgets/radar/radar.dart';
+import 'package:yorimichi_radar/widgets/radar/radar_circle.dart';
 
 class RadarPage extends HookConsumerWidget {
   const RadarPage({super.key});
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    return Scaffold(body: Center(child: Radar()));
+    return Scaffold(body: Center(child: RadarCircle()));
   }
 }
