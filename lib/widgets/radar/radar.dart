@@ -1,3 +1,6 @@
+// Dart imports:
+import 'dart:math';
+
 // Flutter imports:
 import 'package:flutter/material.dart';
 
@@ -16,12 +19,21 @@ class Radar extends HookConsumerWidget {
     return Container(
       height: radarDiameter,
       width: radarDiameter,
-      decoration: BoxDecoration(shape: BoxShape.circle, color: Colors.amber),
+      decoration: BoxDecoration(
+        shape: BoxShape.circle,
+        color: Theme.of(context).colorScheme.surfaceContainerHigh,
+      ),
       child: compassProvider.when(
         data: (data) {
           return Transform.rotate(
             angle: data,
-            child: Center(child: Icon(Icons.arrow_upward_rounded, size: 100)),
+            child: Center(
+              child: Icon(
+                Icons.arrow_upward_rounded,
+                size: 100,
+                color: Theme.of(context).colorScheme.primary,
+              ),
+            ),
           );
         },
         error: (error, stackTrace) {

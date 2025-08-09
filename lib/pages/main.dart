@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 // Project imports:
-import 'package:yorimichi_radar/pages/main_page/main_page.dart';
+import 'package:yorimichi_radar/main_page.dart';
 import 'package:yorimichi_radar/theme.dart';
 
 void main() {
