@@ -12,6 +12,21 @@ class RadarPage extends HookConsumerWidget {
   const RadarPage({super.key});
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    return Scaffold(body: Center(child: RadarCircle()));
+    return Scaffold(
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: [
+            RadarCircle(),
+            OutlinedButton(
+              onPressed: () {
+                ref.read(sensorAnimationProvider.notifier).state++;
+              },
+              child: Text("動くかな？"),
+            ),
+          ],
+        ),
+      ),
+    );
   }
 }

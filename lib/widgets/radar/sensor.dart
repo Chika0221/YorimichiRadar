@@ -46,6 +46,7 @@ class SensorStick extends StatelessWidget {
               ),
             ),
           ),
+          Align(alignment: Alignment.center, child: SensorWave()),
         ],
       ),
     );

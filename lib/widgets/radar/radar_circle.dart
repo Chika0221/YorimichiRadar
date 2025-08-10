@@ -12,6 +12,7 @@ import 'package:yorimichi_radar/state/compass_provider.dart';
 
 part 'compass.dart';
 part 'sensor.dart';
+part 'sensor_wave.dart';
 
 class RadarCircle extends HookConsumerWidget {
   const RadarCircle({super.key});
