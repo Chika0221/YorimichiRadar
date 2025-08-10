@@ -25,7 +25,7 @@ class RadarCircle extends HookConsumerWidget {
         shape: BoxShape.circle,
         color: Theme.of(context).colorScheme.surfaceContainerHigh,
       ),
-      child: Compass(),
+      child: Sensor(radarDiameter: radarDiameter),
     );
   }
 }
