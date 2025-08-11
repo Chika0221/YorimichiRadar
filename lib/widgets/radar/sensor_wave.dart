@@ -1,9 +1,9 @@
 part of 'radar_circle.dart';
 
-final sensorAnimationProvider = StateProvider((ref) => 0);
-
 class SensorWave extends StatefulHookConsumerWidget {
-  const SensorWave({super.key});
+  const SensorWave({super.key, required this.radarDiameter});
+
+  final double radarDiameter;
 
   @override
   ConsumerState<ConsumerStatefulWidget> createState() => _SensorWaveState();
@@ -13,16 +13,16 @@ class _SensorWaveState extends ConsumerState<SensorWave>
     with TickerProviderStateMixin {
   late AnimationController animationController;
   late Tween<double> tween;
-  final Curve curve = Curves.ease;
+  final Curve curve = Curves.bounceInOut;
   late Animation<double> animation;
 
   @override
   void initState() {
     animationController = AnimationController(
       vsync: this,
-      duration: Duration(seconds: 1),
+      duration: Duration(milliseconds: 100),
     );
-    tween = Tween(begin: 0.0, end: 200);
+    tween = Tween(begin: 0.0, end: widget.radarDiameter - 16);
     tween.chain(CurveTween(curve: curve));
     animation = animationController.drive(tween);
 
@@ -31,8 +31,12 @@ class _SensorWaveState extends ConsumerState<SensorWave>
 
   @override
   Widget build(BuildContext context) {
-    ref.listen(sensorAnimationProvider, (_, _) {
+    ref.listen(sensorAnimationProvider, (_, setting) {
+      animationController.duration = setting.duration;
       animationController.forward(from: 0.0);
+      if (setting.duration <= Duration(milliseconds: 100)) {
+        Vibration.vibrate(duration: setting.duration.inMilliseconds);
+      }
     });
 
     return AnimatedBuilder(
@@ -43,7 +47,7 @@ class _SensorWaveState extends ConsumerState<SensorWave>
           height: animation.value,
           decoration: BoxDecoration(
             border: Border.all(
-              width: 2,
+              width: 4,
               color: Theme.of(context).colorScheme.primary,
             ),
             shape: BoxShape.circle,

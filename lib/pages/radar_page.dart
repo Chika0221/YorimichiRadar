@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 // Project imports:
-import 'package:yorimichi_radar/state/compass_provider.dart';
+import 'package:yorimichi_radar/state/sensor_animation_provider.dart';
 import 'package:yorimichi_radar/widgets/radar/radar_circle.dart';
 
 class RadarPage extends HookConsumerWidget {
@@ -20,7 +20,9 @@ class RadarPage extends HookConsumerWidget {
             RadarCircle(),
             OutlinedButton(
               onPressed: () {
-                ref.read(sensorAnimationProvider.notifier).state++;
+                ref
+                    .read(sensorAnimationProvider.notifier)
+                    .startWave(SensorSetting(Duration(milliseconds: 100)));
               },
               child: Text("動くかな？"),
             ),

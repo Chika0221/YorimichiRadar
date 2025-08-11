@@ -6,9 +6,11 @@ import 'package:flutter/material.dart';
 
 // Package imports:
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:vibration/vibration.dart';
 
 // Project imports:
 import 'package:yorimichi_radar/state/compass_provider.dart';
+import 'package:yorimichi_radar/state/sensor_animation_provider.dart';
 
 part 'compass.dart';
 part 'sensor.dart';
