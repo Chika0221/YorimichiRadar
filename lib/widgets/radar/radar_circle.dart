@@ -29,7 +29,39 @@ class RadarCircle extends HookConsumerWidget {
         shape: BoxShape.circle,
         color: Theme.of(context).colorScheme.surfaceContainerHigh,
       ),
-      child: Sensor(radarDiameter: radarDiameter),
+      child: Stack(
+        children: [
+          SizedBox.square(
+            dimension: radarDiameter,
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(1000),
+              child: Image.asset(
+                "assets/images/illust/town.png",
+                fit: BoxFit.fitHeight,
+                alignment: Alignment(-1, 0),
+              ),
+            ),
+          ),
+          Align(
+            alignment: Alignment.center,
+            child: Container(
+              height: radarDiameter,
+              width: 24,
+              color: Theme.of(context).colorScheme.surface,
+            ),
+          ),
+          Align(
+            alignment: Alignment.center,
+            child: Container(
+              height: 24,
+              width: radarDiameter,
+              color: Theme.of(context).colorScheme.surface,
+            ),
+          ),
+        ],
+      ),
+      // child: Sensor(radarDiameter: radarDiameter),
+      // child: Compass(),
     );
   }
 }

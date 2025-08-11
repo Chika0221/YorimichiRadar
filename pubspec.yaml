@@ -68,6 +68,7 @@ flutter:
   assets:
     - assets/fonts/
     - assets/audio/se/
+    - assets/images/illust/
 
   fonts:
     - family: Boku2
