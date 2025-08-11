@@ -16,6 +16,8 @@ class _SensorWaveState extends ConsumerState<SensorWave>
   final Curve curve = Curves.bounceInOut;
   late Animation<double> animation;
 
+  final AudioPlayer audioPlayer = AudioPlayer();
+
   @override
   void initState() {
     animationController = AnimationController(
@@ -34,6 +36,9 @@ class _SensorWaveState extends ConsumerState<SensorWave>
     ref.listen(sensorAnimationProvider, (_, setting) {
       animationController.duration = setting.duration;
       animationController.forward(from: 0.0);
+
+      audioPlayer.play(AssetSource("audio/se/pi.mp3"));
+
       if (setting.duration <= Duration(milliseconds: 100)) {
         Vibration.vibrate(duration: setting.duration.inMilliseconds);
       }
