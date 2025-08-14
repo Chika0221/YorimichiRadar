@@ -17,14 +17,14 @@ class RadarPage extends HookConsumerWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
-            RadarCircle(),
+            RadarCircle(mode: RadarMode.sensor),
             OutlinedButton(
               onPressed: () {
                 ref
                     .read(sensorAnimationProvider.notifier)
                     .startWave(SensorSetting(Duration(milliseconds: 100)));
               },
-              child: const Text('動くかな？'),
+              child: Text("センサ"),
             ),
           ],
         ),

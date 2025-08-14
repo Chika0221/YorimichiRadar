@@ -19,20 +19,31 @@ part 'sensor_wave.dart';
 part 'window.dart';
 
 class RadarCircle extends HookConsumerWidget {
-  const RadarCircle({super.key});
+  const RadarCircle({super.key, required this.mode});
+
+  final RadarMode mode;
+
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final radarDiameter = MediaQuery.of(context).size.width - 128;
-    return Container(
-      height: radarDiameter,
-      width: radarDiameter,
-      decoration: BoxDecoration(
-        shape: BoxShape.circle,
-        color: Theme.of(context).colorScheme.surfaceContainerHigh,
+    return Hero(
+      tag: "radar",
+      child: Container(
+        height: radarDiameter,
+        width: radarDiameter,
+        decoration: BoxDecoration(
+          shape: BoxShape.circle,
+          color: Theme.of(context).colorScheme.surfaceContainerHigh,
+        ),
+        child:
+            mode == RadarMode.window
+                ? Window(radarDiameter: radarDiameter)
+                : mode == RadarMode.sensor
+                ? Sensor(radarDiameter: radarDiameter)
+                : Compass(),
       ),
-      child: Window(radarDiameter: radarDiameter),
-      // child: Sensor(radarDiameter: radarDiameter),
-      // child: Compass(),
     );
   }
 }
+
+enum RadarMode { window, sensor, compass }
