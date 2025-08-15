@@ -2,12 +2,14 @@
 import 'package:flutter/material.dart';
 
 // Package imports:
+import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 // Project imports:
 import 'package:yorimichi_radar/pages/main.dart';
 import 'package:yorimichi_radar/pages/radar_page.dart';
 import 'package:yorimichi_radar/routes.dart';
+import 'package:yorimichi_radar/state/search_condition_provider.dart';
 import 'package:yorimichi_radar/widgets/radar/radar_circle.dart';
 
 part '../widgets/search/search_setting_container.dart';
