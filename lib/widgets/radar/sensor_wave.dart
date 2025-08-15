@@ -1,42 +1,22 @@
 part of 'radar_circle.dart';
 
-class SensorWave extends StatefulHookConsumerWidget {
+class SensorWave extends HookConsumerWidget {
   const SensorWave({super.key, required this.radarDiameter});
 
   final double radarDiameter;
 
   @override
-  ConsumerState<ConsumerStatefulWidget> createState() => _SensorWaveState();
-}
-
-class _SensorWaveState extends ConsumerState<SensorWave>
-    with TickerProviderStateMixin {
-  late AnimationController animationController;
-  late Tween<double> tween;
-  final Curve curve = Curves.bounceInOut;
-  late Animation<double> animation;
-
-  @override
-  void initState() {
-    super.initState();
-    animationController = AnimationController(
-      vsync: this,
+  Widget build(BuildContext context, WidgetRef ref) {
+    final AnimationController animationController = useAnimationController(
       duration: Duration(milliseconds: 100),
     );
-    tween = Tween(begin: 0.0, end: widget.radarDiameter - 16);
-    tween.chain(CurveTween(curve: curve));
-    animation = animationController.drive(tween);
-  }
+    final Tween<double> tween = Tween(begin: 0.0, end: radarDiameter - 16);
+    tween.chain(CurveTween(curve: Curves.ease));
+    final animation = animationController.drive(tween);
 
-  @override
-  void dispose() {
-    // ウィジェットが破棄される際に、リソースを解放します。
-    animationController.dispose();
-    super.dispose();
-  }
+    useAnimation(animation);
+    
 
-  @override
-  Widget build(BuildContext context) {
     ref.listen(sensorAnimationProvider, (_, setting) {
       animationController.duration = setting.duration;
       animationController.forward(from: 0.0);

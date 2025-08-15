@@ -2,8 +2,6 @@
 import 'package:flutter/material.dart';
 
 // Package imports:
-import 'package:audioplayers/audioplayers.dart';
-import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 // Project imports:
@@ -19,14 +17,14 @@ class RadarPage extends HookConsumerWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
-            RadarCircle(),
+            RadarCircle(mode: RadarMode.sensor),
             OutlinedButton(
               onPressed: () {
                 ref
                     .read(sensorAnimationProvider.notifier)
                     .startWave(SensorSetting(Duration(milliseconds: 100)));
               },
-              child: const Text('動くかな？'),
+              child: Text("センサ"),
             ),
           ],
         ),
