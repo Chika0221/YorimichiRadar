@@ -8,6 +8,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:yorimichi_radar/pages/history_page.dart';
 import 'package:yorimichi_radar/pages/search_page.dart';
 import 'package:yorimichi_radar/pages/settings_page.dart';
+import 'package:yorimichi_radar/routes.dart';
 import 'package:yorimichi_radar/state/navi_bar_provider.dart';
 import 'package:yorimichi_radar/widgets/custom_navi_bar.dart';
 
@@ -23,23 +24,17 @@ class MainPage extends HookConsumerWidget {
         actions: [
           IconButton(
             onPressed: () {
-              Navigator.of(context).push(
-                MaterialPageRoute(
-                  builder: (context) {
-                    return SettingsPage();
-                  },
-                ),
-              );
+              Navigator.of(context).pushNamed(AppRoute.setting.path);
             },
-            icon: Icon(Icons.settings),
+            icon: const Icon(Icons.settings),
           ),
         ],
       ),
       body: IndexedStack(
         index: pageIndex,
-        children: [SearchPage(), HistoryPage()],
+        children: const [SearchPage(), HistoryPage()],
       ),
-      bottomNavigationBar: CustomNaviBar(),
+      bottomNavigationBar: const CustomNaviBar(),
     );
   }
 }
