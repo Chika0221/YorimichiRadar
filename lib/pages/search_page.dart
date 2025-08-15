@@ -11,8 +11,8 @@ import 'package:yorimichi_radar/pages/radar_page.dart';
 import 'package:yorimichi_radar/routes.dart';
 import 'package:yorimichi_radar/state/search_condition_provider.dart';
 import 'package:yorimichi_radar/widgets/radar/radar_circle.dart';
+import 'package:yorimichi_radar/widgets/search/search_setting_container.dart';
 
-part '../widgets/search/search_setting_container.dart';
 part '../widgets/search/search_start_button.dart';
 
 class SearchPage extends HookConsumerWidget {

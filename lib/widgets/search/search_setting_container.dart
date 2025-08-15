@@ -1,4 +1,12 @@
-part of '../../pages/search_page.dart';
+// Flutter imports:
+import 'package:flutter/material.dart';
+
+// Package imports:
+import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
+
+// Project imports:
+import 'package:yorimichi_radar/state/search_condition_provider.dart';
 
 class SearchSettingContainer extends HookConsumerWidget {
   const SearchSettingContainer({super.key});
@@ -26,7 +34,7 @@ class SearchSettingContainer extends HookConsumerWidget {
             ),
             _SettingChip(
               icon: Icons.social_distance_outlined,
-              label: "半径${radius.toStringAsFixed(1)}km",
+              label: "半径${radius.raduisValue.toStringAsFixed(1)}km",
             ),
             _SettingChip(
               icon: Icons.directions_walk_outlined,
@@ -79,15 +87,15 @@ class _SearchSettingsDialog extends HookConsumerWidget {
                 ),
               ),
               const SizedBox(height: 16),
-              Text('半径: ${radius.value.toStringAsFixed(1)}km 以内'),
+              Text('半径: ${radius.value.raduisValue.toStringAsFixed(1)}km 以内'),
               Slider(
-                value: radius.value,
-                min: 0.3,
-                max: 10.0,
+                value: radius.value.raduisValue,
+                min: radius.value.min,
+                max: radius.value.max,
                 divisions: 97,
-                label: radius.value.toStringAsFixed(1),
+                label: radius.value.raduisValue.toStringAsFixed(1),
                 onChanged: (value) {
-                  radius.value = value;
+                  radius.value = radius.value.copyWith(raduisValue: value);
                 },
               ),
               const SizedBox(height: 16),

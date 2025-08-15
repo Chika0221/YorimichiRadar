@@ -1,6 +1,9 @@
 // Package imports:
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
+// Project imports:
+import 'package:yorimichi_radar/models/radius_setting.dart';
+
 // Travel Mode Enum
 enum TravelMode { walking, driving }
 
@@ -15,32 +18,15 @@ extension TravelModeExtension on TravelMode {
   }
 }
 
-// Radius Mode
-class RadiusSetting {
-  final double radius_value;
-  final double min;
-  final double max;
-
-  const RadiusSetting(this.radius_value, this.max, this.min);
-}
-
 // Providers
 final keywordProvider = StateProvider<String>((ref) => 'ラーメン屋');
 
-// final radiusProvider = StateProvider<RadiusSetting>((ref) {
-//   final mode = ref.watch(travelModeProvider);
-
-//   return switch (mode) {
-//     TravelMode.driving => RadiusSetting(1.0, 10, 0.5),
-//     TravelMode.walking => RadiusSetting(5.0, 30, 1),
-//   };
-// }); // in km
-final radiusProvider = StateProvider<double>((ref) {
+final radiusProvider = StateProvider<RadiusSetting>((ref) {
   final mode = ref.watch(travelModeProvider);
 
   return switch (mode) {
-    TravelMode.driving => 1.0,
-    TravelMode.walking => 5.0,
+    TravelMode.walking => RadiusSetting(raduisValue: 1.0, min: 0.5, max: 10),
+    TravelMode.driving => RadiusSetting(raduisValue: 5.0, min: 1.0, max: 30.0),
   };
 }); // in km
 
