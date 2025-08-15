@@ -5,9 +5,9 @@ import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 // Project imports:
+import 'package:yorimichi_radar/pages/main.dart';
 import 'package:yorimichi_radar/pages/radar_page.dart';
 import 'package:yorimichi_radar/widgets/radar/radar_circle.dart';
-import 'package:yorimichi_radar/widgets/search/start_search_button.dart';
 
 class SearchPage extends HookConsumerWidget {
   const SearchPage({super.key});
@@ -21,7 +21,8 @@ class SearchPage extends HookConsumerWidget {
             RadarCircle(mode: RadarMode.window),
             SizedBox(
               height: 80,
-              width: MediaQuery.of(context).size.width - 128,
+              width:
+                  MediaQuery.of(context).size.width - pageHorizontalPadding * 2,
               child: FilledButton(
                 style: ButtonStyle(
                   backgroundColor: WidgetStateProperty.all(

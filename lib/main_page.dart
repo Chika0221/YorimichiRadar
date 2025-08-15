@@ -6,7 +6,6 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 // Project imports:
 import 'package:yorimichi_radar/pages/history_page.dart';
-import 'package:yorimichi_radar/pages/radar_page.dart';
 import 'package:yorimichi_radar/pages/search_page.dart';
 import 'package:yorimichi_radar/pages/settings_page.dart';
 import 'package:yorimichi_radar/state/navi_bar_provider.dart';

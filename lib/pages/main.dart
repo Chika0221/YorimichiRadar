@@ -8,6 +8,8 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:yorimichi_radar/main_page.dart';
 import 'package:yorimichi_radar/theme.dart';
 
+const double pageHorizontalPadding = 64.0;
+
 void main() {
   final providerScope = ProviderScope(child: MyApp());
   runApp(providerScope);

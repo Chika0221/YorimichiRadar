@@ -10,6 +10,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:vibration/vibration.dart';
 
 // Project imports:
+import 'package:yorimichi_radar/pages/main.dart';
 import 'package:yorimichi_radar/state/compass_provider.dart';
 import 'package:yorimichi_radar/state/sensor_animation_provider.dart';
 
@@ -25,7 +26,8 @@ class RadarCircle extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final radarDiameter = MediaQuery.of(context).size.width - 128;
+    final radarDiameter =
+        MediaQuery.of(context).size.width - pageHorizontalPadding * 2;
     return Hero(
       tag: "radar",
       child: Container(
@@ -35,12 +37,11 @@ class RadarCircle extends HookConsumerWidget {
           shape: BoxShape.circle,
           color: Theme.of(context).colorScheme.surfaceContainerHigh,
         ),
-        child:
-            mode == RadarMode.window
-                ? Window(radarDiameter: radarDiameter)
-                : mode == RadarMode.sensor
-                ? Sensor(radarDiameter: radarDiameter)
-                : Compass(),
+        child: switch (mode) {
+          RadarMode.window => Window(radarDiameter: radarDiameter),
+          RadarMode.sensor => Sensor(radarDiameter: radarDiameter),
+          RadarMode.compass => Compass(),
+        },
       ),
     );
   }
