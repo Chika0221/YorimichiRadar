@@ -5,8 +5,8 @@ class SearchPageBottomSheet extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return DraggableScrollableSheet(
-      initialChildSize: 0.2,
-      minChildSize: 0.15,
+      initialChildSize: 0.1,
+      minChildSize: 0.1,
       maxChildSize: 0.5,
       expand: false,
       builder: (context, scrollController) {
