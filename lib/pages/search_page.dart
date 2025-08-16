@@ -8,6 +8,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:yorimichi_radar/widgets/radar/radar_circle.dart';
 
 part '../widgets/search/search_page_bottom_sheet.dart';
+part '../widgets/search/search_page_search_button.dart';
 
 class SearchPage extends HookConsumerWidget {
   const SearchPage({super.key});
@@ -15,20 +16,8 @@ class SearchPage extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     return Scaffold(
       body: Container(color: Colors.red),
-      floatingActionButton: RadarCircle(
-        mode: RadarMode.none,
-        radarDiameter: 64,
-        child: Center(
-          child: IconButton(
-            onPressed: () {
-              
-            },
-            icon: Icon(Icons.keyboard_arrow_up_rounded),
-          ),
-        ),
-      ),
+      floatingActionButton: SearchPageSearchButton(onPressed: () {}),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-      
       bottomSheet: SearchPageBottomSheet(),
     );
   }

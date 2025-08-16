@@ -7,12 +7,10 @@ class SearchPageBottomSheet extends HookConsumerWidget {
     return DraggableScrollableSheet(
       initialChildSize: 0.2,
       minChildSize: 0.15,
-      maxChildSize: 0.8,
+      maxChildSize: 0.5,
       expand: false,
       builder: (context, scrollController) {
-        return ListView(controller: scrollController, children: [
-          
-        ]);
+        return ListView(controller: scrollController, children: []);
       },
     );
   }
