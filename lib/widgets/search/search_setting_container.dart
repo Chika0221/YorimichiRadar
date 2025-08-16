@@ -109,6 +109,7 @@ class _SearchSettingsDialog extends HookConsumerWidget {
                     if (value != null) {
                       travelMode.value = value;
                     }
+                    // Navigator.of(context).pop();
                   },
                 );
               }),

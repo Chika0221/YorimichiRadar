@@ -6,7 +6,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 // Project imports:
 import 'package:yorimichi_radar/pages/history_page.dart';
-import 'package:yorimichi_radar/pages/search_page.dart';
+import 'package:yorimichi_radar/pages/search_start_page.dart';
 import 'package:yorimichi_radar/routes.dart';
 import 'package:yorimichi_radar/state/navi_bar_provider.dart';
 import 'package:yorimichi_radar/widgets/custom_navi_bar.dart';
@@ -31,7 +31,7 @@ class MainPage extends HookConsumerWidget {
       ),
       body: IndexedStack(
         index: pageIndex,
-        children: const [SearchPage(), HistoryPage()],
+        children: const [SearchStartPage(), HistoryPage()],
       ),
       bottomNavigationBar: const CustomNaviBar(),
     );

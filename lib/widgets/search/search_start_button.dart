@@ -1,4 +1,4 @@
-part of '../../pages/search_page.dart';
+part of '../../pages/search_start_page.dart';
 
 class SearchStartButton extends HookConsumerWidget {
   const SearchStartButton({super.key});
@@ -13,7 +13,7 @@ class SearchStartButton extends HookConsumerWidget {
             Theme.of(context).colorScheme.tertiary,
           ),
         ),
-        onPressed: () => Navigator.of(context).pushNamed(AppRoute.radar.path),
+        onPressed: () => Navigator.of(context).pushNamed(AppRoute.search.path),
         child: Text(
           "探索を始める",
           style: Theme.of(context).textTheme.headlineMedium?.copyWith(
