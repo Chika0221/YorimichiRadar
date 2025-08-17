@@ -25,7 +25,7 @@ class SearchPageMap extends HookConsumerWidget {
           circles: [
             SearchCircleMarker(
               point: currentLocation,
-              radius: 1000,
+              radius: ref.watch(radiusProvider) * 1000,
               borderColor: Theme.of(context).colorScheme.primary,
             ),
           ],
@@ -47,6 +47,7 @@ class SearchPageMap extends HookConsumerWidget {
           padding: EdgeInsets.only(top: 64, right: 8),
           length: ScalebarLength.m,
         ),
+        Align(alignment: Alignment(1, 0.8), child: Icon(Icons.abc)),
       ],
     );
   }

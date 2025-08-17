@@ -15,7 +15,6 @@ class SearchSettingContainer extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final keyword = ref.watch(keywordProvider);
     final radius = ref.watch(radiusProvider);
-    final travelMode = ref.watch(travelModeProvider);
 
     return InkWell(
       onTap: () => _showSearchSettingsDialog(context, ref),
@@ -34,12 +33,12 @@ class SearchSettingContainer extends HookConsumerWidget {
             ),
             _SettingChip(
               icon: Icons.social_distance_outlined,
-              label: "半径${radius.raduisValue.toStringAsFixed(1)}km",
+              label: "半径${radius.toStringAsFixed(1)}km",
             ),
-            _SettingChip(
-              icon: Icons.directions_walk_outlined,
-              label: travelMode.displayName,
-            ),
+            // _SettingChip(
+            //   icon: Icons.directions_walk_outlined,
+            //   label: travelMode.displayName,
+            // ),
             const Icon(Icons.edit_outlined, size: 20),
           ],
         ),
@@ -66,7 +65,6 @@ class _SearchSettingsDialog extends HookConsumerWidget {
       text: ref.read(keywordProvider),
     );
     final radius = useState(ref.read(radiusProvider));
-    final travelMode = useState(ref.read(travelModeProvider));
 
     return AlertDialog(
       title: const Text('検索条件'),
@@ -87,32 +85,17 @@ class _SearchSettingsDialog extends HookConsumerWidget {
                 ),
               ),
               const SizedBox(height: 16),
-              Text('半径: ${radius.value.raduisValue.toStringAsFixed(1)}km 以内'),
+              Text('半径: ${radius.value.toStringAsFixed(1)}km 以内'),
               Slider(
-                value: radius.value.raduisValue,
-                min: radius.value.min,
-                max: radius.value.max,
+                value: radius.value,
+                min: 1.0,
+                max: 10.0,
                 divisions: 97,
-                label: radius.value.raduisValue.toStringAsFixed(1),
+                label: radius.value.toStringAsFixed(1),
                 onChanged: (value) {
-                  radius.value = radius.value.copyWith(raduisValue: value);
+                  radius.value = value;
                 },
               ),
-              const SizedBox(height: 16),
-              const Text('移動手段'),
-              ...TravelMode.values.map((mode) {
-                return RadioListTile<TravelMode>(
-                  title: Text(mode.displayName),
-                  value: mode,
-                  groupValue: travelMode.value,
-                  onChanged: (value) {
-                    if (value != null) {
-                      travelMode.value = value;
-                    }
-                    // Navigator.of(context).pop();
-                  },
-                );
-              }),
             ],
           ),
         ),
@@ -126,7 +109,6 @@ class _SearchSettingsDialog extends HookConsumerWidget {
           onPressed: () {
             ref.read(keywordProvider.notifier).state = keywordController.text;
             ref.read(radiusProvider.notifier).state = radius.value;
-            ref.read(travelModeProvider.notifier).state = travelMode.value;
             Navigator.pop(context);
           },
           child: const Text('OK'),

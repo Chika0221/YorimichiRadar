@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 // Project imports:
-import 'package:yorimichi_radar/pages/main.dart';
+import 'package:yorimichi_radar/main.dart';
 import 'package:yorimichi_radar/routes.dart';
 import 'package:yorimichi_radar/widgets/radar/radar_circle.dart';
 import 'package:yorimichi_radar/widgets/search/search_setting_container.dart';

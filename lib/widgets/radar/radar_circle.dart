@@ -10,7 +10,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:vibration/vibration.dart';
 
 // Project imports:
-import 'package:yorimichi_radar/pages/main.dart';
+import 'package:yorimichi_radar/main.dart';
 import 'package:yorimichi_radar/state/compass_provider.dart';
 import 'package:yorimichi_radar/state/sensor_animation_provider.dart';
 
