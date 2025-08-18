@@ -30,7 +30,7 @@ class SensorStick extends StatelessWidget {
               clipper: SensorStickClipper(),
               child: Container(
                 height: radarDiameter / 2,
-                width: 32,
+                width: radarDiameter / 10,
                 color: fillColor,
               ),
             ),
@@ -38,8 +38,8 @@ class SensorStick extends StatelessWidget {
           Align(
             alignment: Alignment.center,
             child: Container(
-              height: 48,
-              width: 48,
+              height: radarDiameter / 8,
+              width: radarDiameter / 8,
               decoration: BoxDecoration(
                 color: fillColor,
                 shape: BoxShape.circle,

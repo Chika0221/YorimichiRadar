@@ -20,8 +20,8 @@ class CustomNaviBar extends HookConsumerWidget {
       height: 120,
       child: Container(
         margin: EdgeInsets.fromLTRB(16, 0, 16, 32),
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(100),
+        decoration: ShapeDecoration(
+          shape: StadiumBorder(),
           color: Theme.of(context).colorScheme.secondaryContainer,
         ),
         child: Row(
