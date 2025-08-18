@@ -1,7 +1,19 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <!-- バイブレーション許可 -->
+    <!-- バイブレーション -->
     <uses-permission android:name="android.permission.VIBRATE"/>
+
+    <!-- インターネット接続 -->
+     <!-- flutter_compass -->
+    <uses-permission android:name="android.permission.INTERNET"/>
+
+    <!-- 大体の位置情報 -->
+    <!-- flutter_compass -->
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+
+    <!-- 正確な位置情報 -->
+    <!-- flutter_compass -->
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
 
     <application
         android:label="yorimichi_radar"

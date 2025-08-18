@@ -90,7 +90,7 @@ class _SearchSettingsDialog extends HookConsumerWidget {
                 value: radius.value,
                 min: 1.0,
                 max: 10.0,
-                divisions: ((10.0 - 1.0) ~/ 0.1),
+                divisions: ((10.0 - 1.0) ~/ 1.0),
                 label: radius.value.toStringAsFixed(1),
                 onChanged: (value) {
                   radius.value = value;
