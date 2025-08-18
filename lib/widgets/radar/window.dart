@@ -43,14 +43,14 @@ class Window extends HookConsumerWidget {
           alignment: Alignment.center,
           child: Container(
             height: radarDiameter,
-            width: 24,
+            width: radarDiameter / 16,
             color: Theme.of(context).colorScheme.surface,
           ),
         ),
         Align(
           alignment: Alignment.center,
           child: Container(
-            height: 24,
+            height: radarDiameter / 16,
             width: radarDiameter,
             color: Theme.of(context).colorScheme.surface,
           ),

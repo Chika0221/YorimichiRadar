@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 // Project imports:
-import 'package:yorimichi_radar/main_page.dart';
+import 'package:yorimichi_radar/routes.dart';
 import 'package:yorimichi_radar/theme.dart';
 
 const double pageHorizontalPadding = 64.0;
@@ -26,7 +26,8 @@ class MyApp extends HookConsumerWidget {
       themeMode: ThemeMode.light,
       theme: theme.light(),
       darkTheme: theme.dark(),
-      home: MainPage(),
+      initialRoute: '/',
+      routes: routes,
     );
   }
 }

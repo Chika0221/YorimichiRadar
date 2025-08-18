@@ -9,7 +9,6 @@ class SettingsPage extends HookConsumerWidget {
   const SettingsPage({super.key});
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final theme = Theme.of(context);
     final isDarkMode = useState(false);
     final areNotificationsEnabled = useState(true);
 
