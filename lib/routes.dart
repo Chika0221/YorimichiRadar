@@ -20,6 +20,6 @@ enum AppRoute {
 final Map<String, Widget Function(BuildContext)> routes = {
   AppRoute.home.path: (context) => const MainPage(),
   AppRoute.setting.path: (context) => const SettingsPage(),
-  AppRoute.radar.path: (context) => RadarPage(),
-  AppRoute.search.path: (context) => SearchPage(),
+  AppRoute.radar.path: (context) => const RadarPage(),
+  AppRoute.search.path: (context) => const SearchPage(),
 };

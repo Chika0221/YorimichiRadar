@@ -4,8 +4,8 @@ import 'package:flutter/material.dart';
 // Package imports:
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-class Currentlocationcontainer extends HookConsumerWidget {
-  const Currentlocationcontainer({
+class CurrentLocationContainer extends HookConsumerWidget {
+  const CurrentLocationContainer({
     super.key,
     required this.diameter,
     required this.backgroundColor,

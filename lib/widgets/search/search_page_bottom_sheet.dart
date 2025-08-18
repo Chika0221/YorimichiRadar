@@ -37,6 +37,7 @@ class SearchPageBottomSheet extends HookConsumerWidget {
         return ListView(
           controller: scrollController,
           children: [
+            SearchSettingContainer(),
             Padding(
               padding: const EdgeInsets.all(16),
               child: Row(

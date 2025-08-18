@@ -34,7 +34,7 @@ class SearchPageMap extends HookConsumerWidget {
           markers: [
             Marker(
               point: currentLocation,
-              child: Currentlocationcontainer(
+              child: CurrentLocationContainer(
                 diameter: 32,
                 backgroundColor: Theme.of(context).colorScheme.primary,
                 lineColor: Theme.of(context).colorScheme.surface,
