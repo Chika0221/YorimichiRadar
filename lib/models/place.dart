@@ -9,11 +9,11 @@ part 'place.g.dart';
 class Place with _$Place {
   const factory Place({
     required String id,
-    required String displayName,
+    required Map<String, String> displayName,
     required String shortFormattedAddress,
     required LatLng location,
     double? rating,
-    required List<String> weekdayDescriptions,
+    required List<String?> weekdayDescriptions,
     required String googleMapsUri,
   }) = _Place;
 
@@ -21,7 +21,7 @@ class Place with _$Place {
 
   @override
   // TODO: implement displayName
-  String get displayName => throw UnimplementedError();
+  Map<String, String> get displayName => throw UnimplementedError();
 
   @override
   // TODO: implement googleMapsUri
@@ -51,5 +51,5 @@ class Place with _$Place {
 
   @override
   // TODO: implement weekdayDescriptions
-  List<String> get weekdayDescriptions => throw UnimplementedError();
+  List<String?> get weekdayDescriptions => throw UnimplementedError();
 }

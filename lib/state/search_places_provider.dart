@@ -20,7 +20,7 @@ final searchPlacesProvider =
 class SearchPlacesNotifier extends Notifier<AsyncValue<List<Place>>> {
   @override
   build() {
-    return AsyncValue.data([]);
+    return AsyncValue.data(List<Place>.empty());
   }
 
   Future<void> search() async {
@@ -68,7 +68,7 @@ class PlacesApiService {
             "latitude": "${center.latitude}",
             "longitude": "${center.longitude}",
           },
-          "radius": 500.0,
+          "radius": (radius * 1000),
         },
       },
       "languageCode": "ja",
@@ -80,7 +80,6 @@ class PlacesApiService {
     if (response.statusCode == 200) {
       final Map<String, dynamic> data = json.decode(response.body);
       final List<dynamic> placesJson = data['places'];
-
       return placesJson.map((json) => Place.fromJson(json)).toList();
     } else {
       throw Exception("プレイス取得失敗 ${response.body}");

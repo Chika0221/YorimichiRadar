@@ -15,7 +15,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$Place {
 
- String get id; String get displayName; String get shortFormattedAddress; LatLng get location; double? get rating; List<String> get weekdayDescriptions; String get googleMapsUri;
+ String get id; Map<String, String> get displayName; String get shortFormattedAddress; LatLng get location; double? get rating; List<String?> get weekdayDescriptions; String get googleMapsUri;
 /// Create a copy of Place
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -28,12 +28,12 @@ $PlaceCopyWith<Place> get copyWith => _$PlaceCopyWithImpl<Place>(this as Place, 
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is Place&&(identical(other.id, id) || other.id == id)&&(identical(other.displayName, displayName) || other.displayName == displayName)&&(identical(other.shortFormattedAddress, shortFormattedAddress) || other.shortFormattedAddress == shortFormattedAddress)&&(identical(other.location, location) || other.location == location)&&(identical(other.rating, rating) || other.rating == rating)&&const DeepCollectionEquality().equals(other.weekdayDescriptions, weekdayDescriptions)&&(identical(other.googleMapsUri, googleMapsUri) || other.googleMapsUri == googleMapsUri));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is Place&&(identical(other.id, id) || other.id == id)&&const DeepCollectionEquality().equals(other.displayName, displayName)&&(identical(other.shortFormattedAddress, shortFormattedAddress) || other.shortFormattedAddress == shortFormattedAddress)&&(identical(other.location, location) || other.location == location)&&(identical(other.rating, rating) || other.rating == rating)&&const DeepCollectionEquality().equals(other.weekdayDescriptions, weekdayDescriptions)&&(identical(other.googleMapsUri, googleMapsUri) || other.googleMapsUri == googleMapsUri));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,id,displayName,shortFormattedAddress,location,rating,const DeepCollectionEquality().hash(weekdayDescriptions),googleMapsUri);
+int get hashCode => Object.hash(runtimeType,id,const DeepCollectionEquality().hash(displayName),shortFormattedAddress,location,rating,const DeepCollectionEquality().hash(weekdayDescriptions),googleMapsUri);
 
 @override
 String toString() {
@@ -48,7 +48,7 @@ abstract mixin class $PlaceCopyWith<$Res>  {
   factory $PlaceCopyWith(Place value, $Res Function(Place) _then) = _$PlaceCopyWithImpl;
 @useResult
 $Res call({
- String id, String displayName, String shortFormattedAddress, LatLng location, double? rating, List<String> weekdayDescriptions, String googleMapsUri
+ String id, Map<String, String> displayName, String shortFormattedAddress, LatLng location, double? rating, List<String?> weekdayDescriptions, String googleMapsUri
 });
 
 
@@ -69,11 +69,11 @@ class _$PlaceCopyWithImpl<$Res>
   return _then(_self.copyWith(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String,displayName: null == displayName ? _self.displayName : displayName // ignore: cast_nullable_to_non_nullable
-as String,shortFormattedAddress: null == shortFormattedAddress ? _self.shortFormattedAddress : shortFormattedAddress // ignore: cast_nullable_to_non_nullable
+as Map<String, String>,shortFormattedAddress: null == shortFormattedAddress ? _self.shortFormattedAddress : shortFormattedAddress // ignore: cast_nullable_to_non_nullable
 as String,location: null == location ? _self.location : location // ignore: cast_nullable_to_non_nullable
 as LatLng,rating: freezed == rating ? _self.rating : rating // ignore: cast_nullable_to_non_nullable
 as double?,weekdayDescriptions: null == weekdayDescriptions ? _self.weekdayDescriptions : weekdayDescriptions // ignore: cast_nullable_to_non_nullable
-as List<String>,googleMapsUri: null == googleMapsUri ? _self.googleMapsUri : googleMapsUri // ignore: cast_nullable_to_non_nullable
+as List<String?>,googleMapsUri: null == googleMapsUri ? _self.googleMapsUri : googleMapsUri // ignore: cast_nullable_to_non_nullable
 as String,
   ));
 }
@@ -159,7 +159,7 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String id,  String displayName,  String shortFormattedAddress,  LatLng location,  double? rating,  List<String> weekdayDescriptions,  String googleMapsUri)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String id,  Map<String, String> displayName,  String shortFormattedAddress,  LatLng location,  double? rating,  List<String?> weekdayDescriptions,  String googleMapsUri)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _Place() when $default != null:
 return $default(_that.id,_that.displayName,_that.shortFormattedAddress,_that.location,_that.rating,_that.weekdayDescriptions,_that.googleMapsUri);case _:
@@ -180,7 +180,7 @@ return $default(_that.id,_that.displayName,_that.shortFormattedAddress,_that.loc
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String id,  String displayName,  String shortFormattedAddress,  LatLng location,  double? rating,  List<String> weekdayDescriptions,  String googleMapsUri)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String id,  Map<String, String> displayName,  String shortFormattedAddress,  LatLng location,  double? rating,  List<String?> weekdayDescriptions,  String googleMapsUri)  $default,) {final _that = this;
 switch (_that) {
 case _Place():
 return $default(_that.id,_that.displayName,_that.shortFormattedAddress,_that.location,_that.rating,_that.weekdayDescriptions,_that.googleMapsUri);case _:
@@ -200,7 +200,7 @@ return $default(_that.id,_that.displayName,_that.shortFormattedAddress,_that.loc
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String id,  String displayName,  String shortFormattedAddress,  LatLng location,  double? rating,  List<String> weekdayDescriptions,  String googleMapsUri)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String id,  Map<String, String> displayName,  String shortFormattedAddress,  LatLng location,  double? rating,  List<String?> weekdayDescriptions,  String googleMapsUri)?  $default,) {final _that = this;
 switch (_that) {
 case _Place() when $default != null:
 return $default(_that.id,_that.displayName,_that.shortFormattedAddress,_that.location,_that.rating,_that.weekdayDescriptions,_that.googleMapsUri);case _:
@@ -215,16 +215,22 @@ return $default(_that.id,_that.displayName,_that.shortFormattedAddress,_that.loc
 @JsonSerializable()
 
 class _Place implements Place {
-  const _Place({required this.id, required this.displayName, required this.shortFormattedAddress, required this.location, this.rating, required final  List<String> weekdayDescriptions, required this.googleMapsUri}): _weekdayDescriptions = weekdayDescriptions;
+  const _Place({required this.id, required final  Map<String, String> displayName, required this.shortFormattedAddress, required this.location, this.rating, required final  List<String?> weekdayDescriptions, required this.googleMapsUri}): _displayName = displayName,_weekdayDescriptions = weekdayDescriptions;
   factory _Place.fromJson(Map<String, dynamic> json) => _$PlaceFromJson(json);
 
 @override final  String id;
-@override final  String displayName;
+ final  Map<String, String> _displayName;
+@override Map<String, String> get displayName {
+  if (_displayName is EqualUnmodifiableMapView) return _displayName;
+  // ignore: implicit_dynamic_type
+  return EqualUnmodifiableMapView(_displayName);
+}
+
 @override final  String shortFormattedAddress;
 @override final  LatLng location;
 @override final  double? rating;
- final  List<String> _weekdayDescriptions;
-@override List<String> get weekdayDescriptions {
+ final  List<String?> _weekdayDescriptions;
+@override List<String?> get weekdayDescriptions {
   if (_weekdayDescriptions is EqualUnmodifiableListView) return _weekdayDescriptions;
   // ignore: implicit_dynamic_type
   return EqualUnmodifiableListView(_weekdayDescriptions);
@@ -245,12 +251,12 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _Place&&(identical(other.id, id) || other.id == id)&&(identical(other.displayName, displayName) || other.displayName == displayName)&&(identical(other.shortFormattedAddress, shortFormattedAddress) || other.shortFormattedAddress == shortFormattedAddress)&&(identical(other.location, location) || other.location == location)&&(identical(other.rating, rating) || other.rating == rating)&&const DeepCollectionEquality().equals(other._weekdayDescriptions, _weekdayDescriptions)&&(identical(other.googleMapsUri, googleMapsUri) || other.googleMapsUri == googleMapsUri));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _Place&&(identical(other.id, id) || other.id == id)&&const DeepCollectionEquality().equals(other._displayName, _displayName)&&(identical(other.shortFormattedAddress, shortFormattedAddress) || other.shortFormattedAddress == shortFormattedAddress)&&(identical(other.location, location) || other.location == location)&&(identical(other.rating, rating) || other.rating == rating)&&const DeepCollectionEquality().equals(other._weekdayDescriptions, _weekdayDescriptions)&&(identical(other.googleMapsUri, googleMapsUri) || other.googleMapsUri == googleMapsUri));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,id,displayName,shortFormattedAddress,location,rating,const DeepCollectionEquality().hash(_weekdayDescriptions),googleMapsUri);
+int get hashCode => Object.hash(runtimeType,id,const DeepCollectionEquality().hash(_displayName),shortFormattedAddress,location,rating,const DeepCollectionEquality().hash(_weekdayDescriptions),googleMapsUri);
 
 @override
 String toString() {
@@ -265,7 +271,7 @@ abstract mixin class _$PlaceCopyWith<$Res> implements $PlaceCopyWith<$Res> {
   factory _$PlaceCopyWith(_Place value, $Res Function(_Place) _then) = __$PlaceCopyWithImpl;
 @override @useResult
 $Res call({
- String id, String displayName, String shortFormattedAddress, LatLng location, double? rating, List<String> weekdayDescriptions, String googleMapsUri
+ String id, Map<String, String> displayName, String shortFormattedAddress, LatLng location, double? rating, List<String?> weekdayDescriptions, String googleMapsUri
 });
 
 
@@ -285,12 +291,12 @@ class __$PlaceCopyWithImpl<$Res>
 @override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? displayName = null,Object? shortFormattedAddress = null,Object? location = null,Object? rating = freezed,Object? weekdayDescriptions = null,Object? googleMapsUri = null,}) {
   return _then(_Place(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
-as String,displayName: null == displayName ? _self.displayName : displayName // ignore: cast_nullable_to_non_nullable
-as String,shortFormattedAddress: null == shortFormattedAddress ? _self.shortFormattedAddress : shortFormattedAddress // ignore: cast_nullable_to_non_nullable
+as String,displayName: null == displayName ? _self._displayName : displayName // ignore: cast_nullable_to_non_nullable
+as Map<String, String>,shortFormattedAddress: null == shortFormattedAddress ? _self.shortFormattedAddress : shortFormattedAddress // ignore: cast_nullable_to_non_nullable
 as String,location: null == location ? _self.location : location // ignore: cast_nullable_to_non_nullable
 as LatLng,rating: freezed == rating ? _self.rating : rating // ignore: cast_nullable_to_non_nullable
 as double?,weekdayDescriptions: null == weekdayDescriptions ? _self._weekdayDescriptions : weekdayDescriptions // ignore: cast_nullable_to_non_nullable
-as List<String>,googleMapsUri: null == googleMapsUri ? _self.googleMapsUri : googleMapsUri // ignore: cast_nullable_to_non_nullable
+as List<String?>,googleMapsUri: null == googleMapsUri ? _self.googleMapsUri : googleMapsUri // ignore: cast_nullable_to_non_nullable
 as String,
   ));
 }

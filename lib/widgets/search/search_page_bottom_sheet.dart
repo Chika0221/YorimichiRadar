@@ -17,6 +17,8 @@ class SearchPageBottomSheet extends HookConsumerWidget {
       text: distance.value.round().toString(),
     );
 
+    final searchPlaces = ref.watch(searchPlacesProvider);
+
     useEffect(() {
       final newText = distance.value.round().toString();
       if (distanceTextController.text != newText) {
@@ -163,6 +165,22 @@ class SearchPageBottomSheet extends HookConsumerWidget {
                   ),
                 ],
               ),
+            ),
+            searchPlaces.when(
+              data: (data) {
+                return Column(
+                  children:
+                      data
+                          .map((place) => Text(place.displayName["text"] ?? ""))
+                          .toList(),
+                );
+              },
+              error: (error, stackTrace) {
+                return Text("エラーなんやけど ${error}");
+              },
+              loading: () {
+                return CircularProgressIndicator();
+              },
             ),
           ],
         );
