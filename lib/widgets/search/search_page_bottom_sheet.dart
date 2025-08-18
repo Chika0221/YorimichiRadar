@@ -25,6 +25,17 @@ class SearchPageBottomSheet extends HookConsumerWidget {
       return null;
     }, [distance.value]);
 
+    useEffect(() {
+      void listener() {
+        ref.read(keywordProvider.notifier).state = keywordController.text;
+      }
+
+      keywordController.addListener(listener);
+      return () {
+        keywordController.removeListener(listener);
+      };
+    }, [keywordController]);
+
     return DraggableScrollableSheet(
       controller: sheetController,
       initialChildSize: minChildSize,
@@ -37,7 +48,6 @@ class SearchPageBottomSheet extends HookConsumerWidget {
         return ListView(
           controller: scrollController,
           children: [
-            SearchSettingContainer(),
             Padding(
               padding: const EdgeInsets.all(16),
               child: Row(
@@ -104,10 +114,13 @@ class SearchPageBottomSheet extends HookConsumerWidget {
                           value: distance.value,
                           min: 1.0,
                           max: 10.0,
-                          divisions: 9,
+                          divisions: (10.0 - 1.0) ~/ 1.0,
                           label: '${distance.value.toInt()}km',
                           onChanged: (double value) {
                             distance.value = value;
+                          },
+                          onChangeEnd: (value) {
+                            ref.read(radiusProvider.notifier).state = value;
                           },
                         ),
                       ),
@@ -141,6 +154,8 @@ class SearchPageBottomSheet extends HookConsumerWidget {
                                 1.0;
                             distance.value = currentVal.clamp(1.0, 10);
                             FocusScope.of(context).unfocus();
+                            ref.read(radiusProvider.notifier).state =
+                                distance.value;
                           },
                         ),
                       ),

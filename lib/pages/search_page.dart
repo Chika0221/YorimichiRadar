@@ -8,7 +8,9 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:latlong2/latlong.dart';
 
 // Project imports:
+import 'package:yorimichi_radar/state/current_location_provider.dart';
 import 'package:yorimichi_radar/state/search_condition_provider.dart';
+import 'package:yorimichi_radar/state/search_places_provider.dart';
 import 'package:yorimichi_radar/widgets/radar/radar_circle.dart';
 import 'package:yorimichi_radar/widgets/search/currentLocationContainer.dart';
 import 'package:yorimichi_radar/widgets/search/search_setting_container.dart';
@@ -24,7 +26,11 @@ class SearchPage extends HookConsumerWidget {
     return Scaffold(
       body: SearchPageMap(),
       floatingActionButtonAnimator: FloatingActionButtonAnimator.noAnimation,
-      floatingActionButton: SearchPageSearchButton(onPressed: () {}),
+      floatingActionButton: SearchPageSearchButton(
+        onPressed: () async {
+          await ref.read(searchPlacesProvider.notifier).search();
+        },
+      ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       bottomSheet: SearchPageBottomSheet(),
     );

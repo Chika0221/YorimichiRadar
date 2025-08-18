@@ -4,10 +4,7 @@ class SearchPageMap extends HookConsumerWidget {
   const SearchPageMap({super.key});
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final LatLng currentLocation = LatLng(
-      35.02238185907218,
-      135.96166673359087,
-    );
+    final LatLng currentLocation = ref.read(currentLocationProvider);
 
     return FlutterMap(
       options: MapOptions(

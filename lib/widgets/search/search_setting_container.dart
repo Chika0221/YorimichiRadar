@@ -33,7 +33,7 @@ class SearchSettingContainer extends HookConsumerWidget {
             ),
             _SettingChip(
               icon: Icons.social_distance_outlined,
-              label: "半径${radius.toStringAsFixed(1)}km",
+              label: "半径${radius.round()}km",
             ),
             // _SettingChip(
             //   icon: Icons.directions_walk_outlined,
@@ -79,19 +79,24 @@ class _SearchSettingsDialog extends HookConsumerWidget {
               const SizedBox(height: 8),
               TextField(
                 controller: keywordController,
-                decoration: const InputDecoration(
-                  hintText: '例: カフェ、公園',
-                  border: OutlineInputBorder(),
+                decoration: InputDecoration(
+                  hintText: 'ランダム',
+                  prefixIcon: const Icon(Icons.search),
+                  filled: true,
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(30),
+                    borderSide: BorderSide.none,
+                  ),
                 ),
               ),
               const SizedBox(height: 16),
-              Text('半径: ${radius.value.toStringAsFixed(1)}km 以内'),
+              Text('半径: ${radius.value.round()}km 以内'),
               Slider(
                 value: radius.value,
                 min: 1.0,
                 max: 10.0,
                 divisions: ((10.0 - 1.0) ~/ 1.0),
-                label: radius.value.toStringAsFixed(1),
+                label: radius.value.round().toString(),
                 onChanged: (value) {
                   radius.value = value;
                 },

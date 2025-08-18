@@ -13,6 +13,10 @@ class SearchPageSearchButton extends HookConsumerWidget {
       child: Container(
         decoration: BoxDecoration(
           shape: BoxShape.circle,
+          border: Border.all(
+            width: 4,
+            color: Theme.of(context).colorScheme.surfaceContainerLow,
+          ),
           color: Theme.of(context).colorScheme.primary,
         ),
         child: Center(
