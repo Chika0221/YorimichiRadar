@@ -36,9 +36,11 @@ class SearchPlacesNotifier extends Notifier<AsyncValue<List<Place>>> {
 
     state = const AsyncValue.loading();
 
-    state = await AsyncValue.guard(() async {
-      return apiService.searchPlace(center, radius, text);
-    });
+    // state = await AsyncValue.guard(() async {
+    //   return apiService.searchPlace(center, radius, text);
+    // });
+
+    state = AsyncValue.data(await apiService.searchPlace(center, radius, text));
   }
 }
 

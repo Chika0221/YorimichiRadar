@@ -2,57 +2,42 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:latlong2/latlong.dart';
 
-// Project imports:
-import 'package:yorimichi_radar/models/models.dart';
-
 part 'place.freezed.dart';
 part 'place.g.dart';
 
 @freezed
-class Place with _$Place {
+abstract class Place with _$Place {
   const factory Place({
     required String id,
-    Map<String, String>? displayName,
-    required String shortFormattedAddress,
-    required LatLng location,
-    double? rating,
-    required RegularOpeningHours? regularOpeningHours,
-    required String googleMapsUri,
+    required LocalizedText displayName,
+    String? shortFormattedAddress,
+    LatLng? location,
+    num? rating,
+    RegularOpeningHours? regularOpeningHours,
+    String? googleMapsUri,
   }) = _Place;
 
   factory Place.fromJson(Map<String, dynamic> json) => _$PlaceFromJson(json);
+}
 
-  @override
-  // TODO: implement displayName
-  Map<String, String>? get displayName => throw UnimplementedError();
+@freezed
+abstract class LocalizedText with _$LocalizedText {
+  const factory LocalizedText({
+    required String text,
+    required String languageCode,
+  }) = _LocalizedText;
 
-  @override
-  // TODO: implement googleMapsUri
-  String get googleMapsUri => throw UnimplementedError();
+  factory LocalizedText.fromJson(Map<String, dynamic> json) =>
+      _$LocalizedTextFromJson(json);
+}
 
-  @override
-  // TODO: implement id
-  String get id => throw UnimplementedError();
+@freezed
+abstract class RegularOpeningHours with _$RegularOpeningHours {
+  const factory RegularOpeningHours({
+    required bool openNow,
+    required List<String> weekdayDescriptions,
+  }) = _RegularOpeningHours;
 
-  @override
-  // TODO: implement location
-  LatLng get location => throw UnimplementedError();
-
-  @override
-  // TODO: implement rating
-  double? get rating => throw UnimplementedError();
-
-  @override
-  // TODO: implement regularOpeningHours
-  RegularOpeningHours? get regularOpeningHours => throw UnimplementedError();
-
-  @override
-  // TODO: implement shortFormattedAddress
-  String get shortFormattedAddress => throw UnimplementedError();
-
-  @override
-  Map<String, dynamic> toJson() {
-    // TODO: implement toJson
-    throw UnimplementedError();
-  }
+  factory RegularOpeningHours.fromJson(Map<String, dynamic> json) =>
+      _$RegularOpeningHoursFromJson(json);
 }

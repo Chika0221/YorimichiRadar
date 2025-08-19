@@ -173,7 +173,7 @@ class SearchPageBottomSheet extends HookConsumerWidget {
                       data
                           .map(
                             (place) =>
-                                Text(place.displayName?['text'] ?? '名前なし'),
+                                Text(place.displayName.text),
                           )
                           .toList(),
                 );
