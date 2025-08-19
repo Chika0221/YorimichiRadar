@@ -18,6 +18,7 @@ class SearchPageBottomSheet extends HookConsumerWidget {
     );
 
     final searchPlaces = ref.watch(searchPlacesProvider);
+    final focusPlaceIndex = ref.watch(focusPlaceIndexProvider);
 
     useEffect(() {
       final newText = distance.value.round().toString();
@@ -37,6 +38,16 @@ class SearchPageBottomSheet extends HookConsumerWidget {
         keywordController.removeListener(listener);
       };
     }, [keywordController]);
+
+    useEffect(() {
+      if (searchPlaces.hasValue && searchPlaces.value!.isNotEmpty) {
+        sheetController.animateTo(
+          0.6,
+          duration: Duration(milliseconds: 100),
+          curve: Curves.bounceIn,
+        );
+      }
+    }, [searchPlaces]);
 
     return DraggableScrollableSheet(
       controller: sheetController,
@@ -79,7 +90,7 @@ class SearchPageBottomSheet extends HookConsumerWidget {
             const SizedBox(height: 8),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 24),
-              child: TextField(
+              child: TextFormField(
                 controller: keywordController,
                 decoration: InputDecoration(
                   hintText: 'キーワードで検索 (例: カフェ)',
@@ -90,6 +101,13 @@ class SearchPageBottomSheet extends HookConsumerWidget {
                     borderSide: BorderSide.none,
                   ),
                 ),
+                validator: (value) {
+                  if (value == null || value.trim().isEmpty) {
+                    return 'キーワードを入力してください';
+                  }
+                  return null;
+                },
+                autovalidateMode: AutovalidateMode.onUserInteraction,
               ),
             ),
             const SizedBox(height: 16),
@@ -168,15 +186,16 @@ class SearchPageBottomSheet extends HookConsumerWidget {
             ),
             searchPlaces.when(
               data: (data) {
-                return Column(
-                  children:
-                      data
-                          .map(
-                            (place) =>
-                                Text(place.displayName.text),
-                          )
-                          .toList(),
-                );
+                if (data.isNotEmpty) {
+                  return Container(
+                    height: 300,
+                    child: Center(
+                      child: Text(data[focusPlaceIndex].displayName.text),
+                    ),
+                  );
+                } else {
+                  return SizedBox.shrink();
+                }
               },
               error: (error, stackTrace) {
                 print("エラー何やけど ${error}");

@@ -2,9 +2,6 @@
 import 'dart:convert';
 import 'dart:math';
 
-// Flutter imports:
-import 'package:flutter/foundation.dart';
-
 // Package imports:
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:http/http.dart' as http;
@@ -36,11 +33,11 @@ class SearchPlacesNotifier extends Notifier<AsyncValue<List<Place>>> {
 
     state = const AsyncValue.loading();
 
-    // state = await AsyncValue.guard(() async {
-    //   return apiService.searchPlace(center, radius, text);
-    // });
+    state = await AsyncValue.guard(() async {
+      return apiService.searchPlace(center, radius, text);
+    });
 
-    state = AsyncValue.data(await apiService.searchPlace(center, radius, text));
+    // state = AsyncValue.data(await apiService.searchPlace(center, radius, text));
   }
 }
 
@@ -68,7 +65,7 @@ class PlacesApiService {
 
     final body = jsonEncode(({
       "textQuery": text,
-      "locationBias": {
+      "locationRestriction": {
         "rectangle": {
           "low": {
             "latitude": center.latitude - (radius / 111.0),
@@ -100,7 +97,7 @@ class PlacesApiService {
         return place;
       }).toList();
     } else {
-      throw Exception("プレイス取得失敗 ${response.body}");
+      throw Exception(response.body);
     }
   }
 }
