@@ -15,7 +15,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$Place {
 
- String get id; Map<String, String> get displayName; String get shortFormattedAddress; LatLng get location; double? get rating; List<String?> get weekdayDescriptions; String get googleMapsUri;
+ String get id; Map<String, String>? get displayName; String get shortFormattedAddress; LatLng get location; double? get rating; RegularOpeningHours? get regularOpeningHours; String get googleMapsUri;
 /// Create a copy of Place
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -28,16 +28,16 @@ $PlaceCopyWith<Place> get copyWith => _$PlaceCopyWithImpl<Place>(this as Place, 
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is Place&&(identical(other.id, id) || other.id == id)&&const DeepCollectionEquality().equals(other.displayName, displayName)&&(identical(other.shortFormattedAddress, shortFormattedAddress) || other.shortFormattedAddress == shortFormattedAddress)&&(identical(other.location, location) || other.location == location)&&(identical(other.rating, rating) || other.rating == rating)&&const DeepCollectionEquality().equals(other.weekdayDescriptions, weekdayDescriptions)&&(identical(other.googleMapsUri, googleMapsUri) || other.googleMapsUri == googleMapsUri));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is Place&&(identical(other.id, id) || other.id == id)&&const DeepCollectionEquality().equals(other.displayName, displayName)&&(identical(other.shortFormattedAddress, shortFormattedAddress) || other.shortFormattedAddress == shortFormattedAddress)&&(identical(other.location, location) || other.location == location)&&(identical(other.rating, rating) || other.rating == rating)&&(identical(other.regularOpeningHours, regularOpeningHours) || other.regularOpeningHours == regularOpeningHours)&&(identical(other.googleMapsUri, googleMapsUri) || other.googleMapsUri == googleMapsUri));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,id,const DeepCollectionEquality().hash(displayName),shortFormattedAddress,location,rating,const DeepCollectionEquality().hash(weekdayDescriptions),googleMapsUri);
+int get hashCode => Object.hash(runtimeType,id,const DeepCollectionEquality().hash(displayName),shortFormattedAddress,location,rating,regularOpeningHours,googleMapsUri);
 
 @override
 String toString() {
-  return 'Place(id: $id, displayName: $displayName, shortFormattedAddress: $shortFormattedAddress, location: $location, rating: $rating, weekdayDescriptions: $weekdayDescriptions, googleMapsUri: $googleMapsUri)';
+  return 'Place(id: $id, displayName: $displayName, shortFormattedAddress: $shortFormattedAddress, location: $location, rating: $rating, regularOpeningHours: $regularOpeningHours, googleMapsUri: $googleMapsUri)';
 }
 
 
@@ -48,11 +48,11 @@ abstract mixin class $PlaceCopyWith<$Res>  {
   factory $PlaceCopyWith(Place value, $Res Function(Place) _then) = _$PlaceCopyWithImpl;
 @useResult
 $Res call({
- String id, Map<String, String> displayName, String shortFormattedAddress, LatLng location, double? rating, List<String?> weekdayDescriptions, String googleMapsUri
+ String id, Map<String, String>? displayName, String shortFormattedAddress, LatLng location, double? rating, RegularOpeningHours? regularOpeningHours, String googleMapsUri
 });
 
 
-
+$RegularOpeningHoursCopyWith<$Res>? get regularOpeningHours;
 
 }
 /// @nodoc
@@ -65,19 +65,31 @@ class _$PlaceCopyWithImpl<$Res>
 
 /// Create a copy of Place
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? displayName = null,Object? shortFormattedAddress = null,Object? location = null,Object? rating = freezed,Object? weekdayDescriptions = null,Object? googleMapsUri = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? displayName = freezed,Object? shortFormattedAddress = null,Object? location = null,Object? rating = freezed,Object? regularOpeningHours = freezed,Object? googleMapsUri = null,}) {
   return _then(_self.copyWith(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
-as String,displayName: null == displayName ? _self.displayName : displayName // ignore: cast_nullable_to_non_nullable
-as Map<String, String>,shortFormattedAddress: null == shortFormattedAddress ? _self.shortFormattedAddress : shortFormattedAddress // ignore: cast_nullable_to_non_nullable
+as String,displayName: freezed == displayName ? _self.displayName : displayName // ignore: cast_nullable_to_non_nullable
+as Map<String, String>?,shortFormattedAddress: null == shortFormattedAddress ? _self.shortFormattedAddress : shortFormattedAddress // ignore: cast_nullable_to_non_nullable
 as String,location: null == location ? _self.location : location // ignore: cast_nullable_to_non_nullable
 as LatLng,rating: freezed == rating ? _self.rating : rating // ignore: cast_nullable_to_non_nullable
-as double?,weekdayDescriptions: null == weekdayDescriptions ? _self.weekdayDescriptions : weekdayDescriptions // ignore: cast_nullable_to_non_nullable
-as List<String?>,googleMapsUri: null == googleMapsUri ? _self.googleMapsUri : googleMapsUri // ignore: cast_nullable_to_non_nullable
+as double?,regularOpeningHours: freezed == regularOpeningHours ? _self.regularOpeningHours : regularOpeningHours // ignore: cast_nullable_to_non_nullable
+as RegularOpeningHours?,googleMapsUri: null == googleMapsUri ? _self.googleMapsUri : googleMapsUri // ignore: cast_nullable_to_non_nullable
 as String,
   ));
 }
+/// Create a copy of Place
+/// with the given fields replaced by the non-null parameter values.
+@override
+@pragma('vm:prefer-inline')
+$RegularOpeningHoursCopyWith<$Res>? get regularOpeningHours {
+    if (_self.regularOpeningHours == null) {
+    return null;
+  }
 
+  return $RegularOpeningHoursCopyWith<$Res>(_self.regularOpeningHours!, (value) {
+    return _then(_self.copyWith(regularOpeningHours: value));
+  });
+}
 }
 
 
@@ -159,10 +171,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String id,  Map<String, String> displayName,  String shortFormattedAddress,  LatLng location,  double? rating,  List<String?> weekdayDescriptions,  String googleMapsUri)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String id,  Map<String, String>? displayName,  String shortFormattedAddress,  LatLng location,  double? rating,  RegularOpeningHours? regularOpeningHours,  String googleMapsUri)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _Place() when $default != null:
-return $default(_that.id,_that.displayName,_that.shortFormattedAddress,_that.location,_that.rating,_that.weekdayDescriptions,_that.googleMapsUri);case _:
+return $default(_that.id,_that.displayName,_that.shortFormattedAddress,_that.location,_that.rating,_that.regularOpeningHours,_that.googleMapsUri);case _:
   return orElse();
 
 }
@@ -180,10 +192,10 @@ return $default(_that.id,_that.displayName,_that.shortFormattedAddress,_that.loc
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String id,  Map<String, String> displayName,  String shortFormattedAddress,  LatLng location,  double? rating,  List<String?> weekdayDescriptions,  String googleMapsUri)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String id,  Map<String, String>? displayName,  String shortFormattedAddress,  LatLng location,  double? rating,  RegularOpeningHours? regularOpeningHours,  String googleMapsUri)  $default,) {final _that = this;
 switch (_that) {
 case _Place():
-return $default(_that.id,_that.displayName,_that.shortFormattedAddress,_that.location,_that.rating,_that.weekdayDescriptions,_that.googleMapsUri);case _:
+return $default(_that.id,_that.displayName,_that.shortFormattedAddress,_that.location,_that.rating,_that.regularOpeningHours,_that.googleMapsUri);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -200,10 +212,10 @@ return $default(_that.id,_that.displayName,_that.shortFormattedAddress,_that.loc
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String id,  Map<String, String> displayName,  String shortFormattedAddress,  LatLng location,  double? rating,  List<String?> weekdayDescriptions,  String googleMapsUri)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String id,  Map<String, String>? displayName,  String shortFormattedAddress,  LatLng location,  double? rating,  RegularOpeningHours? regularOpeningHours,  String googleMapsUri)?  $default,) {final _that = this;
 switch (_that) {
 case _Place() when $default != null:
-return $default(_that.id,_that.displayName,_that.shortFormattedAddress,_that.location,_that.rating,_that.weekdayDescriptions,_that.googleMapsUri);case _:
+return $default(_that.id,_that.displayName,_that.shortFormattedAddress,_that.location,_that.rating,_that.regularOpeningHours,_that.googleMapsUri);case _:
   return null;
 
 }
@@ -215,27 +227,23 @@ return $default(_that.id,_that.displayName,_that.shortFormattedAddress,_that.loc
 @JsonSerializable()
 
 class _Place implements Place {
-  const _Place({required this.id, required final  Map<String, String> displayName, required this.shortFormattedAddress, required this.location, this.rating, required final  List<String?> weekdayDescriptions, required this.googleMapsUri}): _displayName = displayName,_weekdayDescriptions = weekdayDescriptions;
+  const _Place({required this.id, final  Map<String, String>? displayName, required this.shortFormattedAddress, required this.location, this.rating, required this.regularOpeningHours, required this.googleMapsUri}): _displayName = displayName;
   factory _Place.fromJson(Map<String, dynamic> json) => _$PlaceFromJson(json);
 
 @override final  String id;
- final  Map<String, String> _displayName;
-@override Map<String, String> get displayName {
+ final  Map<String, String>? _displayName;
+@override Map<String, String>? get displayName {
+  final value = _displayName;
+  if (value == null) return null;
   if (_displayName is EqualUnmodifiableMapView) return _displayName;
   // ignore: implicit_dynamic_type
-  return EqualUnmodifiableMapView(_displayName);
+  return EqualUnmodifiableMapView(value);
 }
 
 @override final  String shortFormattedAddress;
 @override final  LatLng location;
 @override final  double? rating;
- final  List<String?> _weekdayDescriptions;
-@override List<String?> get weekdayDescriptions {
-  if (_weekdayDescriptions is EqualUnmodifiableListView) return _weekdayDescriptions;
-  // ignore: implicit_dynamic_type
-  return EqualUnmodifiableListView(_weekdayDescriptions);
-}
-
+@override final  RegularOpeningHours? regularOpeningHours;
 @override final  String googleMapsUri;
 
 /// Create a copy of Place
@@ -251,16 +259,16 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _Place&&(identical(other.id, id) || other.id == id)&&const DeepCollectionEquality().equals(other._displayName, _displayName)&&(identical(other.shortFormattedAddress, shortFormattedAddress) || other.shortFormattedAddress == shortFormattedAddress)&&(identical(other.location, location) || other.location == location)&&(identical(other.rating, rating) || other.rating == rating)&&const DeepCollectionEquality().equals(other._weekdayDescriptions, _weekdayDescriptions)&&(identical(other.googleMapsUri, googleMapsUri) || other.googleMapsUri == googleMapsUri));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _Place&&(identical(other.id, id) || other.id == id)&&const DeepCollectionEquality().equals(other._displayName, _displayName)&&(identical(other.shortFormattedAddress, shortFormattedAddress) || other.shortFormattedAddress == shortFormattedAddress)&&(identical(other.location, location) || other.location == location)&&(identical(other.rating, rating) || other.rating == rating)&&(identical(other.regularOpeningHours, regularOpeningHours) || other.regularOpeningHours == regularOpeningHours)&&(identical(other.googleMapsUri, googleMapsUri) || other.googleMapsUri == googleMapsUri));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,id,const DeepCollectionEquality().hash(_displayName),shortFormattedAddress,location,rating,const DeepCollectionEquality().hash(_weekdayDescriptions),googleMapsUri);
+int get hashCode => Object.hash(runtimeType,id,const DeepCollectionEquality().hash(_displayName),shortFormattedAddress,location,rating,regularOpeningHours,googleMapsUri);
 
 @override
 String toString() {
-  return 'Place(id: $id, displayName: $displayName, shortFormattedAddress: $shortFormattedAddress, location: $location, rating: $rating, weekdayDescriptions: $weekdayDescriptions, googleMapsUri: $googleMapsUri)';
+  return 'Place(id: $id, displayName: $displayName, shortFormattedAddress: $shortFormattedAddress, location: $location, rating: $rating, regularOpeningHours: $regularOpeningHours, googleMapsUri: $googleMapsUri)';
 }
 
 
@@ -271,11 +279,11 @@ abstract mixin class _$PlaceCopyWith<$Res> implements $PlaceCopyWith<$Res> {
   factory _$PlaceCopyWith(_Place value, $Res Function(_Place) _then) = __$PlaceCopyWithImpl;
 @override @useResult
 $Res call({
- String id, Map<String, String> displayName, String shortFormattedAddress, LatLng location, double? rating, List<String?> weekdayDescriptions, String googleMapsUri
+ String id, Map<String, String>? displayName, String shortFormattedAddress, LatLng location, double? rating, RegularOpeningHours? regularOpeningHours, String googleMapsUri
 });
 
 
-
+@override $RegularOpeningHoursCopyWith<$Res>? get regularOpeningHours;
 
 }
 /// @nodoc
@@ -288,20 +296,32 @@ class __$PlaceCopyWithImpl<$Res>
 
 /// Create a copy of Place
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? displayName = null,Object? shortFormattedAddress = null,Object? location = null,Object? rating = freezed,Object? weekdayDescriptions = null,Object? googleMapsUri = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? displayName = freezed,Object? shortFormattedAddress = null,Object? location = null,Object? rating = freezed,Object? regularOpeningHours = freezed,Object? googleMapsUri = null,}) {
   return _then(_Place(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
-as String,displayName: null == displayName ? _self._displayName : displayName // ignore: cast_nullable_to_non_nullable
-as Map<String, String>,shortFormattedAddress: null == shortFormattedAddress ? _self.shortFormattedAddress : shortFormattedAddress // ignore: cast_nullable_to_non_nullable
+as String,displayName: freezed == displayName ? _self._displayName : displayName // ignore: cast_nullable_to_non_nullable
+as Map<String, String>?,shortFormattedAddress: null == shortFormattedAddress ? _self.shortFormattedAddress : shortFormattedAddress // ignore: cast_nullable_to_non_nullable
 as String,location: null == location ? _self.location : location // ignore: cast_nullable_to_non_nullable
 as LatLng,rating: freezed == rating ? _self.rating : rating // ignore: cast_nullable_to_non_nullable
-as double?,weekdayDescriptions: null == weekdayDescriptions ? _self._weekdayDescriptions : weekdayDescriptions // ignore: cast_nullable_to_non_nullable
-as List<String?>,googleMapsUri: null == googleMapsUri ? _self.googleMapsUri : googleMapsUri // ignore: cast_nullable_to_non_nullable
+as double?,regularOpeningHours: freezed == regularOpeningHours ? _self.regularOpeningHours : regularOpeningHours // ignore: cast_nullable_to_non_nullable
+as RegularOpeningHours?,googleMapsUri: null == googleMapsUri ? _self.googleMapsUri : googleMapsUri // ignore: cast_nullable_to_non_nullable
 as String,
   ));
 }
 
+/// Create a copy of Place
+/// with the given fields replaced by the non-null parameter values.
+@override
+@pragma('vm:prefer-inline')
+$RegularOpeningHoursCopyWith<$Res>? get regularOpeningHours {
+    if (_self.regularOpeningHours == null) {
+    return null;
+  }
 
+  return $RegularOpeningHoursCopyWith<$Res>(_self.regularOpeningHours!, (value) {
+    return _then(_self.copyWith(regularOpeningHours: value));
+  });
+}
 }
 
 // dart format on

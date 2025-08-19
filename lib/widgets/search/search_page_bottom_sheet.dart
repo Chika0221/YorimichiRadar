@@ -5,7 +5,7 @@ class SearchPageBottomSheet extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final sheetController = useMemoized(() => DraggableScrollableController());
-    const maxChildSize = 0.9;
+    const maxChildSize = 0.85;
     const minChildSize = 0.1;
 
     final keywordController = useTextEditingController(
@@ -171,11 +171,15 @@ class SearchPageBottomSheet extends HookConsumerWidget {
                 return Column(
                   children:
                       data
-                          .map((place) => Text(place.displayName["text"] ?? ""))
+                          .map(
+                            (place) =>
+                                Text(place.displayName?['text'] ?? '名前なし'),
+                          )
                           .toList(),
                 );
               },
               error: (error, stackTrace) {
+                print("エラー何やけど ${error}");
                 return Text("エラーなんやけど ${error}");
               },
               loading: () {

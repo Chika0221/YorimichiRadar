@@ -2,6 +2,9 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:latlong2/latlong.dart';
 
+// Project imports:
+import 'package:yorimichi_radar/models/models.dart';
+
 part 'place.freezed.dart';
 part 'place.g.dart';
 
@@ -9,11 +12,11 @@ part 'place.g.dart';
 class Place with _$Place {
   const factory Place({
     required String id,
-    required Map<String, String> displayName,
+    Map<String, String>? displayName,
     required String shortFormattedAddress,
     required LatLng location,
     double? rating,
-    required List<String?> weekdayDescriptions,
+    required RegularOpeningHours? regularOpeningHours,
     required String googleMapsUri,
   }) = _Place;
 
@@ -21,7 +24,7 @@ class Place with _$Place {
 
   @override
   // TODO: implement displayName
-  Map<String, String> get displayName => throw UnimplementedError();
+  Map<String, String>? get displayName => throw UnimplementedError();
 
   @override
   // TODO: implement googleMapsUri
@@ -40,6 +43,10 @@ class Place with _$Place {
   double? get rating => throw UnimplementedError();
 
   @override
+  // TODO: implement regularOpeningHours
+  RegularOpeningHours? get regularOpeningHours => throw UnimplementedError();
+
+  @override
   // TODO: implement shortFormattedAddress
   String get shortFormattedAddress => throw UnimplementedError();
 
@@ -48,8 +55,4 @@ class Place with _$Place {
     // TODO: implement toJson
     throw UnimplementedError();
   }
-
-  @override
-  // TODO: implement weekdayDescriptions
-  List<String?> get weekdayDescriptions => throw UnimplementedError();
 }

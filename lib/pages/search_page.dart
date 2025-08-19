@@ -24,7 +24,22 @@ class SearchPage extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return Scaffold(
+      appBar: AppBar(
+        leading: IconButton.filled(
+          style: IconButton.styleFrom(
+            backgroundColor: Theme.of(context).colorScheme.surfaceContainer,
+            foregroundColor: Theme.of(context).colorScheme.primary,
+          ),
+          onPressed: () {
+            Navigator.of(context).pop();
+          },
+          icon: const Icon(Icons.arrow_back_rounded),
+        ),
+        backgroundColor: Colors.transparent,
+      ),
       body: SearchPageMap(),
+      extendBodyBehindAppBar: true,
+      extendBody: true,
       floatingActionButtonAnimator: FloatingActionButtonAnimator.noAnimation,
       floatingActionButton: SearchPageSearchButton(
         onPressed: () async {

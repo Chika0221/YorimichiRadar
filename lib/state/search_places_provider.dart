@@ -1,5 +1,9 @@
 // Dart imports:
 import 'dart:convert';
+import 'dart:math';
+
+// Flutter imports:
+import 'package:flutter/foundation.dart';
 
 // Package imports:
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -56,19 +60,26 @@ class PlacesApiService {
       'Content-Type': 'application/json',
       'X-Goog-Api-Key': _apiKey,
       'X-Goog-FieldMask':
-          // 'places.id.displayName.shortFormattedAddress.location.rating.weekdayDescriptions.googleMapsUri',
-          'places',
+          'places.id,places.displayName,places.shortFormattedAddress,places.location,places.rating,places.regularOpeningHours,places.googleMapsUri',
+      // "*",
     };
 
     final body = jsonEncode(({
       "textQuery": text,
       "locationBias": {
-        "circle": {
-          "center": {
-            "latitude": "${center.latitude}",
-            "longitude": "${center.longitude}",
+        "rectangle": {
+          "low": {
+            "latitude": center.latitude - (radius / 111.0),
+            "longitude":
+                center.longitude -
+                (radius / (111.0 * cos(center.latitude * pi / 180.0))),
           },
-          "radius": (radius * 1000),
+          "high": {
+            "latitude": center.latitude + (radius / 111.0),
+            "longitude":
+                center.longitude +
+                (radius / (111.0 * cos(center.latitude * pi / 180.0))),
+          },
         },
       },
       "languageCode": "ja",
@@ -79,8 +90,13 @@ class PlacesApiService {
 
     if (response.statusCode == 200) {
       final Map<String, dynamic> data = json.decode(response.body);
-      final List<dynamic> placesJson = data['places'];
-      return placesJson.map((json) => Place.fromJson(json)).toList();
+      final List<dynamic> placesJson = data['places'] ?? [];
+
+      return placesJson.map((json) {
+        // regularOpeningHoursが存在しない場合にエラーになるため、null-safeなアクセスに変更します
+        final place = Place.fromJson(json);
+        return place;
+      }).toList();
     } else {
       throw Exception("プレイス取得失敗 ${response.body}");
     }
