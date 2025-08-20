@@ -37,8 +37,8 @@ class SearchPage extends HookConsumerWidget {
             foregroundColor: Theme.of(context).colorScheme.primary,
           ),
           onPressed: () {
-            ref.read(searchPlacesProvider.notifier).clear();
-            Navigator.of(context).pushReplacementNamed(AppRoute.home.path);
+            // Navigator.of(context).pushReplacementNamed(AppRoute.home.path);
+            Navigator.of(context).pop();
           },
           icon: const Icon(Icons.arrow_back_rounded),
         ),

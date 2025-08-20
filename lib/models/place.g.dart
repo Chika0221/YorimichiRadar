@@ -11,9 +11,12 @@ _Place _$PlaceFromJson(Map<String, dynamic> json) => _Place(
   displayName: LocalizedText.fromJson(
     json['displayName'] as Map<String, dynamic>,
   ),
-  primaryTypeDisplayName: LocalizedText.fromJson(
-    json['primaryTypeDisplayName'] as Map<String, dynamic>,
-  ),
+  primaryTypeDisplayName:
+      json['primaryTypeDisplayName'] == null
+          ? null
+          : LocalizedText.fromJson(
+            json['primaryTypeDisplayName'] as Map<String, dynamic>,
+          ),
   shortFormattedAddress: json['shortFormattedAddress'] as String?,
   location: const LatLngConverter().fromJson(
     json['location'] as Map<String, dynamic>?,
