@@ -1,6 +1,7 @@
 // Flutter imports:
+
+// Flutter imports:
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
 
 // Package imports:
 import 'package:carousel_slider/carousel_slider.dart';
@@ -11,6 +12,7 @@ import 'package:url_launcher/url_launcher.dart';
 
 // Project imports:
 import 'package:yorimichi_radar/models/place.dart';
+import 'package:yorimichi_radar/routes.dart';
 import 'package:yorimichi_radar/state/focus_place_index_provider.dart';
 import 'package:yorimichi_radar/state/search_condition_provider.dart';
 import 'package:yorimichi_radar/state/search_places_provider.dart';

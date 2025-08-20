@@ -153,7 +153,12 @@ class FocusPlaceContainer extends HookConsumerWidget {
           const SizedBox(height: 16),
           SizedBox(
             width: double.maxFinite,
-            child: FilledButton(onPressed: () {}, child: const Text("ここに行く")),
+            child: FilledButton(
+              onPressed: () {
+                Navigator.of(context).pushNamed(AppRoute.radar.path);
+              },
+              child: const Text("ここに行く"),
+            ),
           ),
         ],
       ),
