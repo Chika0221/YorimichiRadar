@@ -11,6 +11,7 @@ import 'package:latlong2/latlong.dart';
 import 'package:yorimichi_radar/env/env.dart';
 import 'package:yorimichi_radar/models/place.dart';
 import 'package:yorimichi_radar/state/current_location_provider.dart';
+import 'package:yorimichi_radar/state/focus_place_index_provider.dart';
 import 'package:yorimichi_radar/state/search_condition_provider.dart';
 
 final searchPlacesProvider =
@@ -40,6 +41,16 @@ class SearchPlacesNotifier extends Notifier<AsyncValue<List<Place>>> {
 
   void clear() {
     state = AsyncValue.data(List<Place>.empty());
+  }
+
+  /// 検索に関連する状態をすべてリセットします。
+  void resetSearch() {
+    // 検索結果をクリア
+    state = AsyncValue.data(List<Place>.empty());
+    // 検索キーワードをクリア
+    ref.read(keywordProvider.notifier).state = "";
+    // フォーカスされている場所のインデックスをクリア
+    ref.read(focusPlaceIndexProvider.notifier).state = null;
   }
 }
 

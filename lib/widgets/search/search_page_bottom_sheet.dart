@@ -1,5 +1,6 @@
 // Flutter imports:
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 
 // Package imports:
 import 'package:carousel_slider/carousel_slider.dart';
@@ -61,16 +62,18 @@ class SearchPageBottomSheet extends HookConsumerWidget {
 
     useEffect(() {
       if (focusPlaceIndex != null) {
-        sheetController.animateTo(
-          0.6,
-          duration: Duration(milliseconds: 200),
-          curve: Curves.easeInOut,
-        );
         carouselController.animateToPage(
           focusPlaceIndex,
           duration: Duration(seconds: 1),
           curve: Curves.decelerate,
         );
+        if (sheetController.size < 0.6) {
+          sheetController.animateTo(
+            0.6,
+            duration: Duration(milliseconds: 200),
+            curve: Curves.easeInOut,
+          );
+        }
       }
     }, [focusPlaceIndex]);
 

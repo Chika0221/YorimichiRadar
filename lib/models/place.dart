@@ -10,7 +10,7 @@ abstract class Place with _$Place {
   const factory Place({
     required String id,
     required LocalizedText displayName,
-    required LocalizedText primaryTypeDisplayName,
+    required LocalizedText? primaryTypeDisplayName,
     String? shortFormattedAddress,
     @LatLngConverter() LatLng? location,
     num? rating,

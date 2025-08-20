@@ -15,7 +15,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$Place {
 
- String get id; LocalizedText get displayName; LocalizedText get primaryTypeDisplayName; String? get shortFormattedAddress;@LatLngConverter() LatLng? get location; num? get rating; RegularOpeningHours? get regularOpeningHours; String? get googleMapsUri;
+ String get id; LocalizedText get displayName; LocalizedText? get primaryTypeDisplayName; String? get shortFormattedAddress;@LatLngConverter() LatLng? get location; num? get rating; RegularOpeningHours? get regularOpeningHours; String? get googleMapsUri;
 /// Create a copy of Place
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -48,11 +48,11 @@ abstract mixin class $PlaceCopyWith<$Res>  {
   factory $PlaceCopyWith(Place value, $Res Function(Place) _then) = _$PlaceCopyWithImpl;
 @useResult
 $Res call({
- String id, LocalizedText displayName, LocalizedText primaryTypeDisplayName, String? shortFormattedAddress,@LatLngConverter() LatLng? location, num? rating, RegularOpeningHours? regularOpeningHours, String? googleMapsUri
+ String id, LocalizedText displayName, LocalizedText? primaryTypeDisplayName, String? shortFormattedAddress,@LatLngConverter() LatLng? location, num? rating, RegularOpeningHours? regularOpeningHours, String? googleMapsUri
 });
 
 
-$LocalizedTextCopyWith<$Res> get displayName;$LocalizedTextCopyWith<$Res> get primaryTypeDisplayName;$RegularOpeningHoursCopyWith<$Res>? get regularOpeningHours;
+$LocalizedTextCopyWith<$Res> get displayName;$LocalizedTextCopyWith<$Res>? get primaryTypeDisplayName;$RegularOpeningHoursCopyWith<$Res>? get regularOpeningHours;
 
 }
 /// @nodoc
@@ -65,12 +65,12 @@ class _$PlaceCopyWithImpl<$Res>
 
 /// Create a copy of Place
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? displayName = null,Object? primaryTypeDisplayName = null,Object? shortFormattedAddress = freezed,Object? location = freezed,Object? rating = freezed,Object? regularOpeningHours = freezed,Object? googleMapsUri = freezed,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? displayName = null,Object? primaryTypeDisplayName = freezed,Object? shortFormattedAddress = freezed,Object? location = freezed,Object? rating = freezed,Object? regularOpeningHours = freezed,Object? googleMapsUri = freezed,}) {
   return _then(_self.copyWith(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String,displayName: null == displayName ? _self.displayName : displayName // ignore: cast_nullable_to_non_nullable
-as LocalizedText,primaryTypeDisplayName: null == primaryTypeDisplayName ? _self.primaryTypeDisplayName : primaryTypeDisplayName // ignore: cast_nullable_to_non_nullable
-as LocalizedText,shortFormattedAddress: freezed == shortFormattedAddress ? _self.shortFormattedAddress : shortFormattedAddress // ignore: cast_nullable_to_non_nullable
+as LocalizedText,primaryTypeDisplayName: freezed == primaryTypeDisplayName ? _self.primaryTypeDisplayName : primaryTypeDisplayName // ignore: cast_nullable_to_non_nullable
+as LocalizedText?,shortFormattedAddress: freezed == shortFormattedAddress ? _self.shortFormattedAddress : shortFormattedAddress // ignore: cast_nullable_to_non_nullable
 as String?,location: freezed == location ? _self.location : location // ignore: cast_nullable_to_non_nullable
 as LatLng?,rating: freezed == rating ? _self.rating : rating // ignore: cast_nullable_to_non_nullable
 as num?,regularOpeningHours: freezed == regularOpeningHours ? _self.regularOpeningHours : regularOpeningHours // ignore: cast_nullable_to_non_nullable
@@ -91,9 +91,12 @@ $LocalizedTextCopyWith<$Res> get displayName {
 /// with the given fields replaced by the non-null parameter values.
 @override
 @pragma('vm:prefer-inline')
-$LocalizedTextCopyWith<$Res> get primaryTypeDisplayName {
-  
-  return $LocalizedTextCopyWith<$Res>(_self.primaryTypeDisplayName, (value) {
+$LocalizedTextCopyWith<$Res>? get primaryTypeDisplayName {
+    if (_self.primaryTypeDisplayName == null) {
+    return null;
+  }
+
+  return $LocalizedTextCopyWith<$Res>(_self.primaryTypeDisplayName!, (value) {
     return _then(_self.copyWith(primaryTypeDisplayName: value));
   });
 }/// Create a copy of Place
@@ -190,7 +193,7 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String id,  LocalizedText displayName,  LocalizedText primaryTypeDisplayName,  String? shortFormattedAddress, @LatLngConverter()  LatLng? location,  num? rating,  RegularOpeningHours? regularOpeningHours,  String? googleMapsUri)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String id,  LocalizedText displayName,  LocalizedText? primaryTypeDisplayName,  String? shortFormattedAddress, @LatLngConverter()  LatLng? location,  num? rating,  RegularOpeningHours? regularOpeningHours,  String? googleMapsUri)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _Place() when $default != null:
 return $default(_that.id,_that.displayName,_that.primaryTypeDisplayName,_that.shortFormattedAddress,_that.location,_that.rating,_that.regularOpeningHours,_that.googleMapsUri);case _:
@@ -211,7 +214,7 @@ return $default(_that.id,_that.displayName,_that.primaryTypeDisplayName,_that.sh
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String id,  LocalizedText displayName,  LocalizedText primaryTypeDisplayName,  String? shortFormattedAddress, @LatLngConverter()  LatLng? location,  num? rating,  RegularOpeningHours? regularOpeningHours,  String? googleMapsUri)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String id,  LocalizedText displayName,  LocalizedText? primaryTypeDisplayName,  String? shortFormattedAddress, @LatLngConverter()  LatLng? location,  num? rating,  RegularOpeningHours? regularOpeningHours,  String? googleMapsUri)  $default,) {final _that = this;
 switch (_that) {
 case _Place():
 return $default(_that.id,_that.displayName,_that.primaryTypeDisplayName,_that.shortFormattedAddress,_that.location,_that.rating,_that.regularOpeningHours,_that.googleMapsUri);case _:
@@ -231,7 +234,7 @@ return $default(_that.id,_that.displayName,_that.primaryTypeDisplayName,_that.sh
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String id,  LocalizedText displayName,  LocalizedText primaryTypeDisplayName,  String? shortFormattedAddress, @LatLngConverter()  LatLng? location,  num? rating,  RegularOpeningHours? regularOpeningHours,  String? googleMapsUri)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String id,  LocalizedText displayName,  LocalizedText? primaryTypeDisplayName,  String? shortFormattedAddress, @LatLngConverter()  LatLng? location,  num? rating,  RegularOpeningHours? regularOpeningHours,  String? googleMapsUri)?  $default,) {final _that = this;
 switch (_that) {
 case _Place() when $default != null:
 return $default(_that.id,_that.displayName,_that.primaryTypeDisplayName,_that.shortFormattedAddress,_that.location,_that.rating,_that.regularOpeningHours,_that.googleMapsUri);case _:
@@ -251,7 +254,7 @@ class _Place implements Place {
 
 @override final  String id;
 @override final  LocalizedText displayName;
-@override final  LocalizedText primaryTypeDisplayName;
+@override final  LocalizedText? primaryTypeDisplayName;
 @override final  String? shortFormattedAddress;
 @override@LatLngConverter() final  LatLng? location;
 @override final  num? rating;
@@ -291,11 +294,11 @@ abstract mixin class _$PlaceCopyWith<$Res> implements $PlaceCopyWith<$Res> {
   factory _$PlaceCopyWith(_Place value, $Res Function(_Place) _then) = __$PlaceCopyWithImpl;
 @override @useResult
 $Res call({
- String id, LocalizedText displayName, LocalizedText primaryTypeDisplayName, String? shortFormattedAddress,@LatLngConverter() LatLng? location, num? rating, RegularOpeningHours? regularOpeningHours, String? googleMapsUri
+ String id, LocalizedText displayName, LocalizedText? primaryTypeDisplayName, String? shortFormattedAddress,@LatLngConverter() LatLng? location, num? rating, RegularOpeningHours? regularOpeningHours, String? googleMapsUri
 });
 
 
-@override $LocalizedTextCopyWith<$Res> get displayName;@override $LocalizedTextCopyWith<$Res> get primaryTypeDisplayName;@override $RegularOpeningHoursCopyWith<$Res>? get regularOpeningHours;
+@override $LocalizedTextCopyWith<$Res> get displayName;@override $LocalizedTextCopyWith<$Res>? get primaryTypeDisplayName;@override $RegularOpeningHoursCopyWith<$Res>? get regularOpeningHours;
 
 }
 /// @nodoc
@@ -308,12 +311,12 @@ class __$PlaceCopyWithImpl<$Res>
 
 /// Create a copy of Place
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? displayName = null,Object? primaryTypeDisplayName = null,Object? shortFormattedAddress = freezed,Object? location = freezed,Object? rating = freezed,Object? regularOpeningHours = freezed,Object? googleMapsUri = freezed,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? displayName = null,Object? primaryTypeDisplayName = freezed,Object? shortFormattedAddress = freezed,Object? location = freezed,Object? rating = freezed,Object? regularOpeningHours = freezed,Object? googleMapsUri = freezed,}) {
   return _then(_Place(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String,displayName: null == displayName ? _self.displayName : displayName // ignore: cast_nullable_to_non_nullable
-as LocalizedText,primaryTypeDisplayName: null == primaryTypeDisplayName ? _self.primaryTypeDisplayName : primaryTypeDisplayName // ignore: cast_nullable_to_non_nullable
-as LocalizedText,shortFormattedAddress: freezed == shortFormattedAddress ? _self.shortFormattedAddress : shortFormattedAddress // ignore: cast_nullable_to_non_nullable
+as LocalizedText,primaryTypeDisplayName: freezed == primaryTypeDisplayName ? _self.primaryTypeDisplayName : primaryTypeDisplayName // ignore: cast_nullable_to_non_nullable
+as LocalizedText?,shortFormattedAddress: freezed == shortFormattedAddress ? _self.shortFormattedAddress : shortFormattedAddress // ignore: cast_nullable_to_non_nullable
 as String?,location: freezed == location ? _self.location : location // ignore: cast_nullable_to_non_nullable
 as LatLng?,rating: freezed == rating ? _self.rating : rating // ignore: cast_nullable_to_non_nullable
 as num?,regularOpeningHours: freezed == regularOpeningHours ? _self.regularOpeningHours : regularOpeningHours // ignore: cast_nullable_to_non_nullable
@@ -335,9 +338,12 @@ $LocalizedTextCopyWith<$Res> get displayName {
 /// with the given fields replaced by the non-null parameter values.
 @override
 @pragma('vm:prefer-inline')
-$LocalizedTextCopyWith<$Res> get primaryTypeDisplayName {
-  
-  return $LocalizedTextCopyWith<$Res>(_self.primaryTypeDisplayName, (value) {
+$LocalizedTextCopyWith<$Res>? get primaryTypeDisplayName {
+    if (_self.primaryTypeDisplayName == null) {
+    return null;
+  }
+
+  return $LocalizedTextCopyWith<$Res>(_self.primaryTypeDisplayName!, (value) {
     return _then(_self.copyWith(primaryTypeDisplayName: value));
   });
 }/// Create a copy of Place
