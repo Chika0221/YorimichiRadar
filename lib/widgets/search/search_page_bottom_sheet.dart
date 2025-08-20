@@ -122,6 +122,8 @@ class SearchPageBottomSheet extends HookConsumerWidget {
               padding: const EdgeInsets.symmetric(horizontal: 24),
               child: TextFormField(
                 controller: keywordController,
+                autofocus: false,
+                canRequestFocus: true,
                 decoration: InputDecoration(
                   hintText: 'キーワードで検索 (例: カフェ)',
                   prefixIcon: const Icon(Icons.search),
