@@ -8,7 +8,6 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:yorimichi_radar/main.dart';
 import 'package:yorimichi_radar/routes.dart';
 import 'package:yorimichi_radar/widgets/radar/radar_circle.dart';
-import 'package:yorimichi_radar/widgets/search/search_setting_container.dart';
 
 part '../widgets/search/search_start_button.dart';
 

@@ -18,8 +18,8 @@ import 'package:yorimichi_radar/state/search_places_provider.dart';
 import 'package:yorimichi_radar/widgets/map/search_place_marker.dart';
 import 'package:yorimichi_radar/widgets/radar/radar_circle.dart';
 import 'package:yorimichi_radar/widgets/search/currentLocationContainer.dart';
+import 'package:yorimichi_radar/widgets/search/search_page_bottom_sheet.dart';
 
-part '../widgets/search/search_page_bottom_sheet.dart';
 part '../widgets/search/search_page_map.dart';
 part '../widgets/search/search_page_search_button.dart';
 
@@ -27,6 +27,8 @@ class SearchPage extends HookConsumerWidget {
   const SearchPage({super.key});
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final sheetController = useMemoized(() => DraggableScrollableController());
+
     return Scaffold(
       appBar: AppBar(
         leading: IconButton.filled(
@@ -47,12 +49,21 @@ class SearchPage extends HookConsumerWidget {
       extendBody: true,
       floatingActionButtonAnimator: FloatingActionButtonAnimator.noAnimation,
       floatingActionButton: SearchPageSearchButton(
-        onPressed: () async {
+        openOnPressed: () async {
           await ref.read(searchPlacesProvider.notifier).search();
+        },
+        closeOnPressed: () {
+          if (sheetController.isAttached) {
+            sheetController.animateTo(
+              0.3,
+              duration: const Duration(milliseconds: 200),
+              curve: Curves.easeInOut,
+            );
+          }
         },
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-      bottomSheet: SearchPageBottomSheet(),
+      bottomSheet: SearchPageBottomSheet(sheetController: sheetController),
     );
   }
 }

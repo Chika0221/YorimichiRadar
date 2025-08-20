@@ -15,6 +15,24 @@
     <!-- flutter_compass -->
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
 
+    <!-- url_launcher -->
+    <queries>
+    <!-- If your app checks for SMS support -->
+    <intent>
+        <action android:name="android.intent.action.VIEW" />
+        <data android:scheme="sms" />
+    </intent>
+    <!-- If your app checks for call support -->
+    <intent>
+        <action android:name="android.intent.action.VIEW" />
+        <data android:scheme="tel" />
+    </intent>
+    <!-- If your application checks for inAppBrowserView launch mode support -->
+    <intent>
+        <action android:name="android.support.customtabs.action.CustomTabsService" />
+    </intent>
+    </queries>
+
     <application
         android:label="yorimichi_radar"
         android:name="${applicationName}"

@@ -61,7 +61,7 @@ class PlacesApiService {
       'Content-Type': 'application/json',
       'X-Goog-Api-Key': _apiKey,
       'X-Goog-FieldMask':
-          'places.id,places.displayName,places.shortFormattedAddress,places.location,places.rating,places.regularOpeningHours,places.googleMapsUri',
+          'places.id,places.displayName,places.primaryTypeDisplayName,places.shortFormattedAddress,places.location,places.rating,places.regularOpeningHours,places.googleMapsUri',
     };
 
     final body = jsonEncode(({
