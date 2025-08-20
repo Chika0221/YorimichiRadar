@@ -190,7 +190,11 @@ class SearchPageBottomSheet extends HookConsumerWidget {
                   return Container(
                     height: 300,
                     child: Center(
-                      child: Text(data[focusPlaceIndex].displayName.text),
+                      child: Text(
+                        (focusPlaceIndex != null)
+                            ? data[focusPlaceIndex].displayName.text
+                            : "選択なし",
+                      ),
                     ),
                   );
                 } else {

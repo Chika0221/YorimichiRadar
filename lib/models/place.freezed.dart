@@ -15,7 +15,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$Place {
 
- String get id; LocalizedText get displayName; String? get shortFormattedAddress; LatLng? get location; num? get rating; RegularOpeningHours? get regularOpeningHours; String? get googleMapsUri;
+ String get id; LocalizedText get displayName; String? get shortFormattedAddress;@LatLngConverter() LatLng? get location; num? get rating; RegularOpeningHours? get regularOpeningHours; String? get googleMapsUri;
 /// Create a copy of Place
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -48,7 +48,7 @@ abstract mixin class $PlaceCopyWith<$Res>  {
   factory $PlaceCopyWith(Place value, $Res Function(Place) _then) = _$PlaceCopyWithImpl;
 @useResult
 $Res call({
- String id, LocalizedText displayName, String? shortFormattedAddress, LatLng? location, num? rating, RegularOpeningHours? regularOpeningHours, String? googleMapsUri
+ String id, LocalizedText displayName, String? shortFormattedAddress,@LatLngConverter() LatLng? location, num? rating, RegularOpeningHours? regularOpeningHours, String? googleMapsUri
 });
 
 
@@ -180,7 +180,7 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String id,  LocalizedText displayName,  String? shortFormattedAddress,  LatLng? location,  num? rating,  RegularOpeningHours? regularOpeningHours,  String? googleMapsUri)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String id,  LocalizedText displayName,  String? shortFormattedAddress, @LatLngConverter()  LatLng? location,  num? rating,  RegularOpeningHours? regularOpeningHours,  String? googleMapsUri)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _Place() when $default != null:
 return $default(_that.id,_that.displayName,_that.shortFormattedAddress,_that.location,_that.rating,_that.regularOpeningHours,_that.googleMapsUri);case _:
@@ -201,7 +201,7 @@ return $default(_that.id,_that.displayName,_that.shortFormattedAddress,_that.loc
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String id,  LocalizedText displayName,  String? shortFormattedAddress,  LatLng? location,  num? rating,  RegularOpeningHours? regularOpeningHours,  String? googleMapsUri)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String id,  LocalizedText displayName,  String? shortFormattedAddress, @LatLngConverter()  LatLng? location,  num? rating,  RegularOpeningHours? regularOpeningHours,  String? googleMapsUri)  $default,) {final _that = this;
 switch (_that) {
 case _Place():
 return $default(_that.id,_that.displayName,_that.shortFormattedAddress,_that.location,_that.rating,_that.regularOpeningHours,_that.googleMapsUri);case _:
@@ -221,7 +221,7 @@ return $default(_that.id,_that.displayName,_that.shortFormattedAddress,_that.loc
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String id,  LocalizedText displayName,  String? shortFormattedAddress,  LatLng? location,  num? rating,  RegularOpeningHours? regularOpeningHours,  String? googleMapsUri)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String id,  LocalizedText displayName,  String? shortFormattedAddress, @LatLngConverter()  LatLng? location,  num? rating,  RegularOpeningHours? regularOpeningHours,  String? googleMapsUri)?  $default,) {final _that = this;
 switch (_that) {
 case _Place() when $default != null:
 return $default(_that.id,_that.displayName,_that.shortFormattedAddress,_that.location,_that.rating,_that.regularOpeningHours,_that.googleMapsUri);case _:
@@ -236,13 +236,13 @@ return $default(_that.id,_that.displayName,_that.shortFormattedAddress,_that.loc
 @JsonSerializable()
 
 class _Place implements Place {
-  const _Place({required this.id, required this.displayName, this.shortFormattedAddress, this.location, this.rating, this.regularOpeningHours, this.googleMapsUri});
+  const _Place({required this.id, required this.displayName, this.shortFormattedAddress, @LatLngConverter() this.location, this.rating, this.regularOpeningHours, this.googleMapsUri});
   factory _Place.fromJson(Map<String, dynamic> json) => _$PlaceFromJson(json);
 
 @override final  String id;
 @override final  LocalizedText displayName;
 @override final  String? shortFormattedAddress;
-@override final  LatLng? location;
+@override@LatLngConverter() final  LatLng? location;
 @override final  num? rating;
 @override final  RegularOpeningHours? regularOpeningHours;
 @override final  String? googleMapsUri;
@@ -280,7 +280,7 @@ abstract mixin class _$PlaceCopyWith<$Res> implements $PlaceCopyWith<$Res> {
   factory _$PlaceCopyWith(_Place value, $Res Function(_Place) _then) = __$PlaceCopyWithImpl;
 @override @useResult
 $Res call({
- String id, LocalizedText displayName, String? shortFormattedAddress, LatLng? location, num? rating, RegularOpeningHours? regularOpeningHours, String? googleMapsUri
+ String id, LocalizedText displayName, String? shortFormattedAddress,@LatLngConverter() LatLng? location, num? rating, RegularOpeningHours? regularOpeningHours, String? googleMapsUri
 });
 
 

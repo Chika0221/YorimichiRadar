@@ -12,10 +12,9 @@ _Place _$PlaceFromJson(Map<String, dynamic> json) => _Place(
     json['displayName'] as Map<String, dynamic>,
   ),
   shortFormattedAddress: json['shortFormattedAddress'] as String?,
-  location:
-      json['location'] == null
-          ? null
-          : LatLng(json["location"]["latitude"], json["location"]["longitude"]),
+  location: const LatLngConverter().fromJson(
+    json['location'] as Map<String, dynamic>?,
+  ),
   rating: json['rating'] as num?,
   regularOpeningHours:
       json['regularOpeningHours'] == null
@@ -30,7 +29,7 @@ Map<String, dynamic> _$PlaceToJson(_Place instance) => <String, dynamic>{
   'id': instance.id,
   'displayName': instance.displayName,
   'shortFormattedAddress': instance.shortFormattedAddress,
-  'location': instance.location,
+  'location': const LatLngConverter().toJson(instance.location),
   'rating': instance.rating,
   'regularOpeningHours': instance.regularOpeningHours,
   'googleMapsUri': instance.googleMapsUri,

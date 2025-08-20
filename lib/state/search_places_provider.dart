@@ -36,8 +36,10 @@ class SearchPlacesNotifier extends Notifier<AsyncValue<List<Place>>> {
     state = await AsyncValue.guard(() async {
       return apiService.searchPlace(center, radius, text);
     });
+  }
 
-    // state = AsyncValue.data(await apiService.searchPlace(center, radius, text));
+  void clear() {
+    state = AsyncValue.data(List<Place>.empty());
   }
 }
 
@@ -60,7 +62,6 @@ class PlacesApiService {
       'X-Goog-Api-Key': _apiKey,
       'X-Goog-FieldMask':
           'places.id,places.displayName,places.shortFormattedAddress,places.location,places.rating,places.regularOpeningHours,places.googleMapsUri',
-      // "*",
     };
 
     final body = jsonEncode(({
@@ -92,7 +93,6 @@ class PlacesApiService {
       final List<dynamic> placesJson = data['places'] ?? [];
 
       return placesJson.map((json) {
-        // regularOpeningHoursが存在しない場合にエラーになるため、null-safeなアクセスに変更します
         final place = Place.fromJson(json);
         return place;
       }).toList();

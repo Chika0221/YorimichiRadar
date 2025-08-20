@@ -10,10 +10,12 @@ import 'package:loading_animation_widget/loading_animation_widget.dart';
 
 // Project imports:
 import 'package:yorimichi_radar/models/place.dart';
+import 'package:yorimichi_radar/routes.dart';
 import 'package:yorimichi_radar/state/current_location_provider.dart';
 import 'package:yorimichi_radar/state/focus_place_index_provider.dart';
 import 'package:yorimichi_radar/state/search_condition_provider.dart';
 import 'package:yorimichi_radar/state/search_places_provider.dart';
+import 'package:yorimichi_radar/widgets/map/search_place_marker.dart';
 import 'package:yorimichi_radar/widgets/radar/radar_circle.dart';
 import 'package:yorimichi_radar/widgets/search/currentLocationContainer.dart';
 
@@ -33,7 +35,8 @@ class SearchPage extends HookConsumerWidget {
             foregroundColor: Theme.of(context).colorScheme.primary,
           ),
           onPressed: () {
-            Navigator.of(context).pop();
+            ref.read(searchPlacesProvider.notifier).clear();
+            Navigator.of(context).pushReplacementNamed(AppRoute.home.path);
           },
           icon: const Icon(Icons.arrow_back_rounded),
         ),

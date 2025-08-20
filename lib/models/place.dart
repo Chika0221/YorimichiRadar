@@ -11,7 +11,7 @@ abstract class Place with _$Place {
     required String id,
     required LocalizedText displayName,
     String? shortFormattedAddress,
-    LatLng? location,
+    @LatLngConverter() LatLng? location,
     num? rating,
     RegularOpeningHours? regularOpeningHours,
     String? googleMapsUri,
@@ -40,4 +40,20 @@ abstract class RegularOpeningHours with _$RegularOpeningHours {
 
   factory RegularOpeningHours.fromJson(Map<String, dynamic> json) =>
       _$RegularOpeningHoursFromJson(json);
+}
+
+class LatLngConverter implements JsonConverter<LatLng?, Map<String, dynamic>?> {
+  const LatLngConverter();
+
+  @override
+  LatLng? fromJson(Map<String, dynamic>? json) {
+    if (json == null) return null;
+    return LatLng(json["latitude"] as double, json["longitude"] as double);
+  }
+
+  @override
+  Map<String, dynamic>? toJson(LatLng? object) {
+    if (object == null) return null;
+    return {'latitude': object.latitude, 'longitude': object.longitude};
+  }
 }
