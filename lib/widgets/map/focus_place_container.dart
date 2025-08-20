@@ -5,10 +5,12 @@ class FocusPlaceContainer extends HookConsumerWidget {
     super.key,
     required this.index,
     required this.place,
+    this.isShowGoButton = true,
   });
 
   final Place place;
   final int index;
+  final bool isShowGoButton;
 
   Future<void> launchGoogleMap() async {
     final Uri url = Uri.parse(place.googleMapsUri ?? "");
@@ -65,19 +67,20 @@ class FocusPlaceContainer extends HookConsumerWidget {
                     ).textTheme.labelLarge?.copyWith(fontSize: 17),
                   ),
                 ),
-              CustomChip(
-                child: SizedBox(
-                  width: 120,
-                  child: StarRating(
-                    rating: place.rating!.toDouble(),
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    color: Colors.amber,
-                    filledIcon: Icons.star_rounded,
-                    halfFilledIcon: Icons.star_half_rounded,
-                    emptyIcon: Icons.star_outline_rounded,
+              if (place.rating != null)
+                CustomChip(
+                  child: SizedBox(
+                    width: 120,
+                    child: StarRating(
+                      rating: place.rating!.toDouble(),
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      color: Colors.amber,
+                      filledIcon: Icons.star_rounded,
+                      halfFilledIcon: Icons.star_half_rounded,
+                      emptyIcon: Icons.star_outline_rounded,
+                    ),
                   ),
                 ),
-              ),
               if (place.regularOpeningHours != null)
                 CustomChip(
                   child:
@@ -131,35 +134,44 @@ class FocusPlaceContainer extends HookConsumerWidget {
                   ),
                   child: Column(
                     children: [
-                      ListTile(
-                        title: const Text("住所"),
-                        subtitle: Text(place.shortFormattedAddress!),
-                      ),
-                      const Divider(),
-                      ListTile(
-                        title: const Text("営業時間"),
-                        subtitle: Text(
-                          place.regularOpeningHours!.weekdayDescriptions.join(
-                            "\n",
+                      if (place.shortFormattedAddress != null)
+                        ListTile(
+                          title: const Text("住所"),
+                          subtitle: Text(place.shortFormattedAddress!),
+                        ),
+                      if (place.shortFormattedAddress != null &&
+                          place.regularOpeningHours != null)
+                        const Divider(),
+                      if (place.regularOpeningHours != null) ...[
+                        ListTile(
+                          title: const Text("営業時間"),
+                          subtitle: Text(
+                            place.regularOpeningHours!.weekdayDescriptions.join(
+                              "\n",
+                            ),
                           ),
                         ),
-                      ),
+                      ],
                     ],
                   ),
                 ),
               ),
             ),
           ),
-          const SizedBox(height: 16),
-          SizedBox(
-            width: double.maxFinite,
-            child: FilledButton(
-              onPressed: () {
-                Navigator.of(context).pushNamed(AppRoute.radar.path);
-              },
-              child: const Text("ここに行く"),
+          if (isShowGoButton) ...[
+            const SizedBox(height: 16),
+            SizedBox(
+              width: double.maxFinite,
+              child: FilledButton(
+                onPressed: () {
+                  Navigator.of(
+                    context,
+                  ).pushNamed(AppRoute.searchCondition.path);
+                },
+                child: const Text("ここに行く"),
+              ),
             ),
-          ),
+          ],
         ],
       ),
     );
