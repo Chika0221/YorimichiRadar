@@ -21,7 +21,6 @@ class MyApp extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     TextTheme textTheme = Theme.of(context).textTheme;
     MaterialTheme theme = MaterialTheme(textTheme);
-
     return MaterialApp(
       themeMode: ThemeMode.light,
       theme: theme.light(),

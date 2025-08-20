@@ -4,16 +4,13 @@ class SearchPageMap extends HookConsumerWidget {
   const SearchPageMap({super.key});
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final LatLng currentLocation = LatLng(
-      35.02238185907218,
-      135.96166673359087,
-    );
+    final LatLng currentLocation = ref.read(currentLocationProvider);
 
     return FlutterMap(
       options: MapOptions(
         initialCenter: currentLocation,
         initialZoom: 14,
-        maxZoom: 16,
+        maxZoom: 20,
         minZoom: 8,
       ),
       children: [
@@ -42,6 +39,7 @@ class SearchPageMap extends HookConsumerWidget {
             ),
           ],
         ),
+        SearchPlaceMarkers(),
         Scalebar(
           alignment: Alignment.topRight,
           padding: EdgeInsets.only(top: 64, right: 8),

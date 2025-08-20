@@ -13,7 +13,11 @@ class SearchStartButton extends HookConsumerWidget {
             Theme.of(context).colorScheme.tertiary,
           ),
         ),
-        onPressed: () => Navigator.of(context).pushNamed(AppRoute.search.path),
+        // onPressed: () => Navigator.of(context).pushNamed(AppRoute.search.path),
+        onPressed:
+            () => Navigator.of(
+              context,
+            ).pushReplacementNamed(AppRoute.search.path),
         child: Text(
           "探索を始める",
           style: Theme.of(context).textTheme.headlineMedium?.copyWith(
