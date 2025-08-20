@@ -38,8 +38,8 @@ class FocusPlaceContainer extends HookConsumerWidget {
             children: [
               Expanded(
                 child: Text(
-                  // place.displayName.text,
-                  "とある${place.primaryTypeDisplayName?.text ?? "お店"}",
+                  place.displayName.text,
+                  // "とある${place.primaryTypeDisplayName?.text ?? "お店"}",
                   style: Theme.of(context).textTheme.headlineSmall?.copyWith(
                     fontWeight: FontWeight.bold,
                   ),
