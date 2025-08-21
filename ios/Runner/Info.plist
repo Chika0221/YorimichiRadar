@@ -29,7 +29,9 @@
 	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
 	<string>位置と方角を取得するため</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string>位置と方角を取得するため</string>
+	<string>位置と方角を取得するため。またナビゲートのために使用</string>
+
+	
 
 
 	<!-- url_launcher用のスキーム -->

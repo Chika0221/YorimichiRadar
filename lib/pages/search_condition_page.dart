@@ -6,6 +6,8 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 // Project imports:
+import 'package:yorimichi_radar/scripts/search_OSRM.dart';
+import 'package:yorimichi_radar/state/current_location_provider.dart';
 import 'package:yorimichi_radar/state/focus_place_index_provider.dart';
 import 'package:yorimichi_radar/state/search_places_provider.dart';
 import 'package:yorimichi_radar/widgets/search/search_page_bottom_sheet.dart';
@@ -15,11 +17,16 @@ class SearchConditionPage extends HookConsumerWidget {
   const SearchConditionPage({super.key});
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final currentLocation = ref.watch(currentLocationProvider);
     final focusPlaceIndex = ref.watch(focusPlaceIndexProvider);
     final searchPlaces = ref.watch(searchPlacesProvider);
     final place = searchPlaces.value![focusPlaceIndex ?? 0];
 
     final radarOptions = useState({'センサー': true, 'コンパス': false});
+
+    useEffect(() {
+      SearchOsrm().fetchRoute([currentLocation.value!, place.location!]);
+    }, []);
 
     return Scaffold(
       appBar: AppBar(

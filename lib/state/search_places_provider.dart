@@ -26,7 +26,7 @@ class SearchPlacesNotifier extends Notifier<AsyncValue<List<Place>>> {
   }
 
   Future<void> search() async {
-    final LatLng center = ref.read(currentLocationProvider);
+    final LatLng center = ref.read(currentLocationProvider).value!;
     final double radius = ref.read(radiusProvider);
     final String text = ref.read(keywordProvider);
 
