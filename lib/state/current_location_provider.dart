@@ -59,7 +59,7 @@ class CurrentLocationNotifier extends AsyncNotifier<LatLng?> {
 
     const LocationSettings locationSettings = LocationSettings(
       accuracy: LocationAccuracy.high,
-      distanceFilter: 100,
+      distanceFilter: 1,
     );
 
     _positionStreamSubscription?.cancel();
@@ -74,5 +74,9 @@ class CurrentLocationNotifier extends AsyncNotifier<LatLng?> {
         state = AsyncValue.error(error, StackTrace.current);
       },
     );
+  }
+
+  void endSubscription() {
+    _positionStreamSubscription?.cancel();
   }
 }

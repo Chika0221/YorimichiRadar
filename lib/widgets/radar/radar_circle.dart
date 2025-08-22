@@ -61,4 +61,13 @@ class RadarCircle extends HookConsumerWidget {
   }
 }
 
-enum RadarMode { window, sensor, compass, arrow, none }
+enum RadarMode {
+  window("窓"),
+  sensor("センサー"),
+  compass("コンパス"),
+  arrow("開く"),
+  none("なし");
+
+  const RadarMode(this.text);
+  final String text;
+}
