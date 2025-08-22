@@ -39,6 +39,7 @@ class _SearchPageMapState extends ConsumerState<SearchPageMap>
           rotation: 0,
         );
       }
+      return null;
     }, [focusPlaceIndex]);
 
     return asyncCurrentLocationProvider.when(

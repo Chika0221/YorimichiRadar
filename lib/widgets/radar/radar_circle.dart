@@ -1,16 +1,22 @@
 // Dart imports:
 
+// Dart imports:
+import 'dart:math';
+
 // Flutter imports:
 import 'package:flutter/material.dart';
 
 // Package imports:
 import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:latlong2/latlong.dart' as latlong;
 import 'package:vibration/vibration.dart';
 
 // Project imports:
 import 'package:yorimichi_radar/main.dart';
+import 'package:yorimichi_radar/models/place.dart';
 import 'package:yorimichi_radar/state/compass_provider.dart';
 import 'package:yorimichi_radar/state/sensor_animation_provider.dart';
 
@@ -25,6 +31,8 @@ class RadarCircle extends HookConsumerWidget {
     required this.mode,
     this.child,
     this.radarDiameter,
+    this.currentLocation,
+    this.place,
     this.icon = Icons.keyboard_arrow_up_rounded,
   });
 
@@ -32,6 +40,8 @@ class RadarCircle extends HookConsumerWidget {
   final IconData icon;
   final Widget? child;
   final double? radarDiameter;
+  final latlong.LatLng? currentLocation;
+  final Place? place;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -52,7 +62,10 @@ class RadarCircle extends HookConsumerWidget {
         child: switch (mode) {
           RadarMode.window => Window(radarDiameter: diameter),
           RadarMode.sensor => Sensor(radarDiameter: diameter),
-          RadarMode.compass => Compass(),
+          RadarMode.compass => Compass(
+            currentLocation: currentLocation,
+            place: place,
+          ),
           RadarMode.arrow => Center(child: Icon(icon)),
           RadarMode.none => child,
         },

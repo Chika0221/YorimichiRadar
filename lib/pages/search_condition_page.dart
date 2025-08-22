@@ -7,7 +7,6 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
 
 // Project imports:
-import 'package:yorimichi_radar/models/route.dart';
 import 'package:yorimichi_radar/routes.dart';
 import 'package:yorimichi_radar/state/current_location_provider.dart';
 import 'package:yorimichi_radar/state/focus_place_index_provider.dart';
@@ -39,6 +38,7 @@ class SearchConditionPage extends HookConsumerWidget {
       radarOptions.addListener(() {
         ref.read(selectRadarProvider.notifier).state = radarOptions.value;
       });
+      return null;
     }, []);
 
     return currentLocation.when(
@@ -140,7 +140,7 @@ class SearchConditionPage extends HookConsumerWidget {
                               leading: const Icon(Icons.timer_outlined),
                               title: const Text("かかる時間"),
                               trailing: Text(
-                                "約 ${(routeData!.duration / 20).round()} 分 ~",
+                                "約 ${(routeData.duration / 20).round()} 分 ~",
                                 style: Theme.of(context).textTheme.bodyLarge,
                               ),
                             );
@@ -185,7 +185,9 @@ class SearchConditionPage extends HookConsumerWidget {
                       .read(currentLocationProvider.notifier)
                       .continuousGetLocation();
 
-                  Navigator.of(context).pushNamed(AppRoute.radar.path);
+                  Navigator.of(
+                    context,
+                  ).pushReplacementNamed(AppRoute.radar.path);
                 },
               ),
             ),

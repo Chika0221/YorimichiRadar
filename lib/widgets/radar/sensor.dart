@@ -1,13 +1,16 @@
 part of 'radar_circle.dart';
 
 class Sensor extends HookConsumerWidget {
-  const Sensor({super.key, required this.radarDiameter});
+  const Sensor({
+    super.key,
+    required this.radarDiameter,
+  });
 
   final double radarDiameter;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    return SensorStick(radarDiameter: radarDiameter);
+    return Stack(children: [SensorStick(radarDiameter: radarDiameter)]);
   }
 }
 

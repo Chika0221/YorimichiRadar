@@ -2,7 +2,6 @@
 import 'package:flutter/material.dart';
 
 // Package imports:
-import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 // Project imports:
@@ -30,7 +29,7 @@ class SelectModeButton extends HookConsumerWidget {
           children: [
             SizedBox(
               width: MediaQuery.of(context).size.width * 0.4,
-              child: FilledButton(
+              child: OutlinedButton(
                 onPressed: () {
                   radarMode.value = RadarMode.sensor;
                 },
@@ -40,7 +39,7 @@ class SelectModeButton extends HookConsumerWidget {
             const SizedBox(width: 8),
             SizedBox(
               width: MediaQuery.of(context).size.width * 0.4,
-              child: FilledButton(
+              child: OutlinedButton(
                 onPressed: () {
                   radarMode.value = RadarMode.compass;
                 },
