@@ -7,8 +7,6 @@ part 'route.g.dart';
 
 @freezed
 abstract class RouteData with _$RouteData {
-  // JSONのsnake_caseのキー(例: weight_name)を
-  // DartのcamelCase(例: weightName)に自動で変換します。
   @JsonSerializable(fieldRename: FieldRename.snake)
   const factory RouteData({
     required String weightName,
