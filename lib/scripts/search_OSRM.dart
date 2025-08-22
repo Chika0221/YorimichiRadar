@@ -34,9 +34,7 @@ class SearchOsrm {
 
       return routePoints;
     } else {
-      print("コード:${response.statusCode}");
-      print("レスポンス:$responseBody");
-      throw Exception(response.statusCode);
+      throw Exception(responseBody);
     }
   }
 }

@@ -17,8 +17,17 @@ class RadarPage extends HookConsumerWidget {
     final searchPlaces = ref.watch(searchPlacesProvider);
     final focusPlaceIndex = ref.watch(focusPlaceIndexProvider);
 
+    final place = searchPlaces.when(
+      data: (place) => place[focusPlaceIndex!],
+      error: (error, stackTrace) => null,
+      loading: () => null,
+    );
+    if (place == null) {
+      return const Scaffold(body: Center(child: Text("場所が見つかりませんでした。")));
+    }
+
     return Scaffold(
-      appBar: AppBar(title: Text("店の名前"), centerTitle: true),
+      appBar: AppBar(title: Text(place.displayName.text), centerTitle: true),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,

@@ -16,8 +16,13 @@ final currentLocationProvider =
     );
 
 class CurrentLocationNotifier extends AsyncNotifier<LatLng?> {
+  StreamSubscription<Position>? _positionStreamSubscription;
+
   @override
   FutureOr<LatLng?> build() {
+    ref.onDispose(() {
+      _positionStreamSubscription?.cancel();
+    });
     return initGeolocator();
   }
 
@@ -57,12 +62,17 @@ class CurrentLocationNotifier extends AsyncNotifier<LatLng?> {
       distanceFilter: 100,
     );
 
-    final Stream<LatLng> stream = Geolocator.getPositionStream(
+    _positionStreamSubscription?.cancel();
+    _positionStreamSubscription = Geolocator.getPositionStream(
       locationSettings: locationSettings,
-    ).map((value) {
-      final location = LatLng(value.latitude, value.longitude);
-      state = AsyncValue.data(location);
-      return location;
-    });
+    ).listen(
+      (value) {
+        final location = LatLng(value.latitude, value.longitude);
+        state = AsyncValue.data(location);
+      },
+      onError: (error) {
+        state = AsyncValue.error(error, StackTrace.current);
+      },
+    );
   }
 }
