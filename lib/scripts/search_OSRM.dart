@@ -5,10 +5,13 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:latlong2/latlong.dart';
 
+// Project imports:
+import 'package:yorimichi_radar/models/route.dart';
+
 class SearchOsrm {
-  Future<List<LatLng>> fetchRoute(List<LatLng> wayPoints) async {
+  Future<RouteData?> fetchRoute(List<LatLng> wayPoints) async {
     if (wayPoints.isEmpty) {
-      return [];
+      return null;
     }
 
     final String points = wayPoints
@@ -17,7 +20,7 @@ class SearchOsrm {
         .join(";");
 
     final String url =
-        "https://router.project-osrm.org/route/v1/driving/$points?geometries=geojson";
+        "http://router.project-osrm.org/route/v1/foot/$points?geometries=geojson";
 
     final response = await http.get(Uri.parse(url));
 
@@ -26,13 +29,11 @@ class SearchOsrm {
     if (response.statusCode == 200) {
       final data = json.decode(responseBody);
 
-      final List<dynamic> coordinates =
-          data['routes'][0]['geometry']['coordinates'];
+      final Map<String, dynamic> route = data['routes'][0];
 
-      final routePoints =
-          coordinates.map((coord) => LatLng(coord[1], coord[0])).toList();
+      final routeData = RouteData.fromJson(route);
 
-      return routePoints;
+      return routeData;
     } else {
       throw Exception(responseBody);
     }

@@ -7,6 +7,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
 
 // Project imports:
+import 'package:yorimichi_radar/models/route.dart';
 import 'package:yorimichi_radar/scripts/search_OSRM.dart';
 import 'package:yorimichi_radar/state/current_location_provider.dart';
 import 'package:yorimichi_radar/state/focus_place_index_provider.dart';
@@ -29,9 +30,10 @@ class SearchConditionPage extends HookConsumerWidget {
 
     return currentLocation.when(
       data: (location) {
-        useEffect(() {
-          SearchOsrm().fetchRoute([location!, place.location!]);
-        }, []);
+        final Future<RouteData?> routeData = SearchOsrm().fetchRoute([
+          location!,
+          place.location!,
+        ]);
 
         return Scaffold(
           appBar: AppBar(
@@ -111,13 +113,40 @@ class SearchConditionPage extends HookConsumerWidget {
                           ),
                         ),
                         const Divider(height: 1, indent: 16, endIndent: 16),
-                        ListTile(
-                          leading: const Icon(Icons.timer_outlined),
-                          title: const Text("かかる時間"),
-                          trailing: Text(
-                            "約 15 分", // TODO: 動的に計算
-                            style: Theme.of(context).textTheme.bodyLarge,
-                          ),
+                        FutureBuilder(
+                          future: routeData,
+                          builder: (context, snapshot) {
+                            if (snapshot.hasError) {
+                              return ListTile(
+                                leading: const Icon(Icons.timer_outlined),
+                                title: const Text("かかる時間"),
+                                trailing: Text(
+                                  "エラー",
+                                  style: Theme.of(context).textTheme.bodyLarge,
+                                ),
+                              );
+                            } else if (snapshot.hasData) {
+                              return ListTile(
+                                leading: const Icon(Icons.timer_outlined),
+                                title: const Text("かかる時間"),
+                                trailing: Text(
+                                  "約 ${(snapshot.data!.duration / 20).round()} 分 ~",
+                                  style: Theme.of(context).textTheme.bodyLarge,
+                                ),
+                              );
+                            } else {
+                              return ListTile(
+                                leading: const Icon(Icons.timer_outlined),
+                                title: const Text("かかる時間"),
+                                trailing:
+                                    LoadingAnimationWidget.progressiveDots(
+                                      color:
+                                          Theme.of(context).colorScheme.primary,
+                                      size: 24,
+                                    ),
+                              );
+                            }
+                          },
                         ),
                       ],
                     ),
