@@ -6,12 +6,10 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 // Project imports:
-import 'package:yorimichi_radar/main.dart';
 import 'package:yorimichi_radar/routes.dart';
 import 'package:yorimichi_radar/state/search_places_provider.dart';
 import 'package:yorimichi_radar/widgets/radar/radar_circle.dart';
-
-part '../widgets/search/search_start_button.dart';
+import 'package:yorimichi_radar/widgets/search/search_start_button.dart';
 
 class SearchStartPage extends HookConsumerWidget {
   const SearchStartPage({super.key});
@@ -25,7 +23,15 @@ class SearchStartPage extends HookConsumerWidget {
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: [RadarCircle(mode: RadarMode.window), SearchStartButton()],
+          children: [
+            RadarCircle(mode: RadarMode.window),
+            SearchStartButton(
+              onPressed: () {
+                ref.read(searchPlacesProvider.notifier).resetSearch();
+                Navigator.of(context).pushNamed(AppRoute.search.path);
+              },
+            ),
+          ],
         ),
       ),
     );

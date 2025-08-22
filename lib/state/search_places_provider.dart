@@ -26,17 +26,26 @@ class SearchPlacesNotifier extends Notifier<AsyncValue<List<Place>>> {
   }
 
   Future<void> search() async {
-    final LatLng center = ref.read(currentLocationProvider);
-    final double radius = ref.read(radiusProvider);
-    final String text = ref.read(keywordProvider);
+    final asyncCenter = ref.read(currentLocationProvider);
+    asyncCenter.when(
+      data: (center) async {
+        state = const AsyncValue.loading();
 
-    final apiService = ref.read(placesApiServiceProvider);
+        final double radius = ref.read(radiusProvider);
+        final String text = ref.read(keywordProvider);
+        final apiService = ref.read(placesApiServiceProvider);
 
-    state = const AsyncValue.loading();
-
-    state = await AsyncValue.guard(() async {
-      return apiService.searchPlace(center, radius, text);
-    });
+        state = await AsyncValue.guard(() async {
+          return apiService.searchPlace(center!, radius, text);
+        });
+      },
+      error: (error, stackTrace) {
+        state = AsyncValue.error(error, stackTrace);
+      },
+      loading: () {
+        state = AsyncValue.loading();
+      },
+    );
   }
 
   void clear() {

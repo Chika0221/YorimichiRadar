@@ -1,19 +1,23 @@
 // Flutter imports:
+
+// Flutter imports:
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
 
 // Package imports:
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_rating/flutter_rating.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 // Project imports:
 import 'package:yorimichi_radar/models/place.dart';
+import 'package:yorimichi_radar/routes.dart';
 import 'package:yorimichi_radar/state/focus_place_index_provider.dart';
 import 'package:yorimichi_radar/state/search_condition_provider.dart';
 import 'package:yorimichi_radar/state/search_places_provider.dart';
+import 'package:yorimichi_radar/widgets/map/search_place_marker.dart';
 
 part '../map/focus_place_container.dart';
 
@@ -120,6 +124,8 @@ class SearchPageBottomSheet extends HookConsumerWidget {
               padding: const EdgeInsets.symmetric(horizontal: 24),
               child: TextFormField(
                 controller: keywordController,
+                autofocus: false,
+                canRequestFocus: true,
                 decoration: InputDecoration(
                   hintText: 'キーワードで検索 (例: カフェ)',
                   prefixIcon: const Icon(Icons.search),
@@ -249,7 +255,21 @@ class SearchPageBottomSheet extends HookConsumerWidget {
                 return Text("$error");
               },
               loading: () {
-                return CircularProgressIndicator();
+                return SizedBox(
+                  width: double.infinity,
+                  height: 100,
+                  child: Center(
+                    child: TopNotificationContainer(
+                      backgroundColor: Colors.transparent,
+                      foregroundColor: Theme.of(context).colorScheme.primary,
+                      title: "読込中",
+                      child: LoadingAnimationWidget.progressiveDots(
+                        color: Theme.of(context).colorScheme.primary,
+                        size: 24,
+                      ),
+                    ),
+                  ),
+                );
               },
             ),
           ],

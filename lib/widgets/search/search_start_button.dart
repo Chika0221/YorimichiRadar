@@ -1,7 +1,17 @@
-part of '../../pages/search_start_page.dart';
+// Flutter imports:
+import 'package:flutter/material.dart';
+
+// Package imports:
+import 'package:hooks_riverpod/hooks_riverpod.dart';
+
+// Project imports:
+import 'package:yorimichi_radar/main.dart';
 
 class SearchStartButton extends HookConsumerWidget {
-  const SearchStartButton({super.key});
+  const SearchStartButton({super.key, required this.onPressed});
+
+  final void Function() onPressed;
+
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return SizedBox(
@@ -13,10 +23,7 @@ class SearchStartButton extends HookConsumerWidget {
             Theme.of(context).colorScheme.tertiary,
           ),
         ),
-        onPressed: () {
-          ref.read(searchPlacesProvider.notifier).resetSearch();
-          Navigator.of(context).pushNamed(AppRoute.search.path);
-        },
+        onPressed: onPressed,
         child: Text(
           "探索を始める",
           style: Theme.of(context).textTheme.headlineMedium?.copyWith(
