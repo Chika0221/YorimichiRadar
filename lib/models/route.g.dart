@@ -26,13 +26,13 @@ Map<String, dynamic> _$RouteDataToJson(_RouteData instance) =>
 _Geometry _$GeometryFromJson(Map<String, dynamic> json) => _Geometry(
   coordinates:
       (json['coordinates'] as List<dynamic>)
-          .map((e) => const LatLugConverterFromList().fromJson(e as List))
+          .map((e) => const LatLngConverterFromList().fromJson(e as List))
           .toList(),
   type: json['type'] as String,
 );
 
 Map<String, dynamic> _$GeometryToJson(_Geometry instance) => <String, dynamic>{
   'coordinates':
-      instance.coordinates.map(const LatLugConverterFromList().toJson).toList(),
+      instance.coordinates.map(const LatLngConverterFromList().toJson).toList(),
   'type': instance.type,
 };

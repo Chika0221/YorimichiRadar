@@ -14,6 +14,11 @@ class Compass extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final compassProvider = ref.watch(CompassProvider);
 
+    if (currentLocation == null || place?.location == null) {
+      // currentLocationまたはplaceがnullの場合は何も表示しない
+      return const SizedBox.shrink();
+    }
+
     final double bearing = Geolocator.bearingBetween(
       currentLocation!.latitude,
       currentLocation!.longitude,
@@ -21,16 +26,22 @@ class Compass extends HookConsumerWidget {
       place!.location!.longitude,
     );
 
-    final radianBearing = -1 * pi * (bearing / 180);
-
     return compassProvider.when(
-      data: (data) {
+      data: (compassHeading) {
+        // デバイスの向き（北が0度）から目的地の方位を引くことで、
+        // デバイスの上方向から目的地までの相対的な角度を計算する
+        final degreesAngle = bearing - compassHeading;
+
+        final radianAngle = degreesAngle * (pi / 180);
+
+        final radianCompassHeading = compassHeading * (pi / 180);
+
         return Transform.rotate(
-          angle: radianBearing + data,
+          angle: radianAngle,
           child: Center(
             child: Icon(
               Icons.arrow_upward_rounded,
-              size: 100,
+              size: 128,
               color: Theme.of(context).colorScheme.primary,
             ),
           ),

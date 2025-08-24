@@ -7,6 +7,7 @@ import 'package:geolocator/geolocator.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 // Project imports:
+import 'package:yorimichi_radar/routes.dart';
 import 'package:yorimichi_radar/state/current_location_provider.dart';
 import 'package:yorimichi_radar/state/focus_place_index_provider.dart';
 import 'package:yorimichi_radar/state/search_condition_provider.dart';
@@ -23,6 +24,7 @@ class RadarPage extends HookConsumerWidget {
         ref.read(currentLocationProvider.notifier).endSubscription();
       };
     }, []);
+
     final searchPlaces = ref.watch(searchPlacesProvider);
     final focusPlaceIndex = ref.watch(focusPlaceIndexProvider);
     final currentLocation = ref.watch(currentLocationProvider);
@@ -50,6 +52,9 @@ class RadarPage extends HookConsumerWidget {
               place.location!.latitude,
               place.location!.longitude,
             );
+            if (distanceInMeters < 100) {
+              Navigator.of(context).pushNamed(AppRoute.result.path);
+            }
             return Column(
               children: [
                 Spacer(flex: 1),

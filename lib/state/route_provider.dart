@@ -56,7 +56,7 @@ class SearchOsrm {
         .join(";");
 
     final String url =
-        "http://router.project-osrm.org/route/v1/foot/$points?geometries=geojson";
+        "https://router.project-osrm.org/route/v1/foot/$points?geometries=geojson";
 
     final response = await http.get(Uri.parse(url));
 

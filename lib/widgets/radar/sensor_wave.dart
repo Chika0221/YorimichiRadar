@@ -15,18 +15,13 @@ class SensorWave extends HookConsumerWidget {
     final animation = animationController.drive(tween);
 
     useAnimation(animation);
-    
 
     ref.listen(sensorAnimationProvider, (_, setting) {
       animationController.duration = setting.duration;
       animationController.forward(from: 0.0);
 
-      // 音を重ねて再生するために、毎回新しいAudioPlayerインスタンスを生成します。
-      // これにより、前の音の再生を妨げることなく、新しい音を再生できます。
       final player = AudioPlayer();
       player.play(AssetSource('audio/se/pi.mp3'));
-      // 再生が完了したら、リソースを解放するためにインスタンスを破棄します。
-      // .first を使うことで、一度だけ実行されるようにしています。
       player.onPlayerComplete.first.then((_) => player.dispose());
 
       if (setting.duration <= Duration(milliseconds: 100)) {

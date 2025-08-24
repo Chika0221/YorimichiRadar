@@ -23,7 +23,7 @@ abstract class RouteData with _$RouteData {
 @freezed
 abstract class Geometry with _$Geometry {
   const factory Geometry({
-    @LatLugConverterFromList() required List<LatLng> coordinates,
+    @LatLngConverterFromList() required List<LatLng> coordinates,
     required String type,
   }) = _Geometry;
 
@@ -31,8 +31,8 @@ abstract class Geometry with _$Geometry {
       _$GeometryFromJson(json);
 }
 
-class LatLugConverterFromList implements JsonConverter<LatLng, List<dynamic>> {
-  const LatLugConverterFromList();
+class LatLngConverterFromList implements JsonConverter<LatLng, List<dynamic>> {
+  const LatLngConverterFromList();
 
   @override
   LatLng fromJson(List<dynamic> location) {

@@ -308,7 +308,7 @@ $GeometryCopyWith<$Res> get geometry {
 /// @nodoc
 mixin _$Geometry {
 
-@LatLugConverterFromList() List<LatLng> get coordinates; String get type;
+@LatLngConverterFromList() List<LatLng> get coordinates; String get type;
 /// Create a copy of Geometry
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -341,7 +341,7 @@ abstract mixin class $GeometryCopyWith<$Res>  {
   factory $GeometryCopyWith(Geometry value, $Res Function(Geometry) _then) = _$GeometryCopyWithImpl;
 @useResult
 $Res call({
-@LatLugConverterFromList() List<LatLng> coordinates, String type
+@LatLngConverterFromList() List<LatLng> coordinates, String type
 });
 
 
@@ -447,7 +447,7 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function(@LatLugConverterFromList()  List<LatLng> coordinates,  String type)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function(@LatLngConverterFromList()  List<LatLng> coordinates,  String type)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _Geometry() when $default != null:
 return $default(_that.coordinates,_that.type);case _:
@@ -468,7 +468,7 @@ return $default(_that.coordinates,_that.type);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function(@LatLugConverterFromList()  List<LatLng> coordinates,  String type)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function(@LatLngConverterFromList()  List<LatLng> coordinates,  String type)  $default,) {final _that = this;
 switch (_that) {
 case _Geometry():
 return $default(_that.coordinates,_that.type);case _:
@@ -488,7 +488,7 @@ return $default(_that.coordinates,_that.type);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function(@LatLugConverterFromList()  List<LatLng> coordinates,  String type)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function(@LatLngConverterFromList()  List<LatLng> coordinates,  String type)?  $default,) {final _that = this;
 switch (_that) {
 case _Geometry() when $default != null:
 return $default(_that.coordinates,_that.type);case _:
@@ -503,11 +503,11 @@ return $default(_that.coordinates,_that.type);case _:
 @JsonSerializable()
 
 class _Geometry implements Geometry {
-  const _Geometry({@LatLugConverterFromList() required final  List<LatLng> coordinates, required this.type}): _coordinates = coordinates;
+  const _Geometry({@LatLngConverterFromList() required final  List<LatLng> coordinates, required this.type}): _coordinates = coordinates;
   factory _Geometry.fromJson(Map<String, dynamic> json) => _$GeometryFromJson(json);
 
  final  List<LatLng> _coordinates;
-@override@LatLugConverterFromList() List<LatLng> get coordinates {
+@override@LatLngConverterFromList() List<LatLng> get coordinates {
   if (_coordinates is EqualUnmodifiableListView) return _coordinates;
   // ignore: implicit_dynamic_type
   return EqualUnmodifiableListView(_coordinates);
@@ -548,7 +548,7 @@ abstract mixin class _$GeometryCopyWith<$Res> implements $GeometryCopyWith<$Res>
   factory _$GeometryCopyWith(_Geometry value, $Res Function(_Geometry) _then) = __$GeometryCopyWithImpl;
 @override @useResult
 $Res call({
-@LatLugConverterFromList() List<LatLng> coordinates, String type
+@LatLngConverterFromList() List<LatLng> coordinates, String type
 });
 
 

@@ -1,10 +1,7 @@
 part of 'radar_circle.dart';
 
 class Sensor extends HookConsumerWidget {
-  const Sensor({
-    super.key,
-    required this.radarDiameter,
-  });
+  const Sensor({super.key, required this.radarDiameter});
 
   final double radarDiameter;
 

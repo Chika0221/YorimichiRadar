@@ -140,7 +140,7 @@ class SearchConditionPage extends HookConsumerWidget {
                               leading: const Icon(Icons.timer_outlined),
                               title: const Text("かかる時間"),
                               trailing: Text(
-                                "約 ${(routeData.duration / 20).round()} 分 ~",
+                                "約 ${(routeData.distance / 80).round()} 分 ~", //不動産広告基準
                                 style: Theme.of(context).textTheme.bodyLarge,
                               ),
                             );
