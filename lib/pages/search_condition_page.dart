@@ -7,11 +7,14 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
 
 // Project imports:
-import 'package:yorimichi_radar/scripts/search_OSRM.dart';
+import 'package:yorimichi_radar/routes.dart';
 import 'package:yorimichi_radar/state/current_location_provider.dart';
 import 'package:yorimichi_radar/state/focus_place_index_provider.dart';
+import 'package:yorimichi_radar/state/route_provider.dart';
+import 'package:yorimichi_radar/state/search_condition_provider.dart';
 import 'package:yorimichi_radar/state/search_places_provider.dart';
 import 'package:yorimichi_radar/widgets/map/search_place_marker.dart';
+import 'package:yorimichi_radar/widgets/radar/radar_circle.dart';
 import 'package:yorimichi_radar/widgets/search/search_page_bottom_sheet.dart';
 import 'package:yorimichi_radar/widgets/search/search_start_button.dart';
 
@@ -23,16 +26,23 @@ class SearchConditionPage extends HookConsumerWidget {
     final searchPlaces = ref.watch(searchPlacesProvider);
     final place = searchPlaces.value![focusPlaceIndex ?? 0];
 
-    final radarOptions = useState({'センサー': true, 'コンパス': false});
+    final radarOptions = useState({
+      RadarMode.sensor: true,
+      RadarMode.compass: false,
+    });
+    final route = ref.watch(routeProvider);
 
     final currentLocation = ref.watch(currentLocationProvider);
 
+    useEffect(() {
+      radarOptions.addListener(() {
+        ref.read(selectRadarProvider.notifier).state = radarOptions.value;
+      });
+      return null;
+    }, []);
+
     return currentLocation.when(
       data: (location) {
-        useEffect(() {
-          SearchOsrm().fetchRoute([location!, place.location!]);
-        }, []);
-
         return Scaffold(
           appBar: AppBar(
             title: const Text("探索の計画"),
@@ -88,7 +98,7 @@ class SearchConditionPage extends HookConsumerWidget {
                             children:
                                 radarOptions.value.keys.map((key) {
                                   return CheckboxListTile(
-                                    title: Text(key),
+                                    title: Text(key.text),
                                     value: radarOptions.value[key],
                                     onChanged: (newValue) {
                                       final checkedCount =
@@ -100,9 +110,10 @@ class SearchConditionPage extends HookConsumerWidget {
                                         return;
                                       }
 
-                                      final newOptions = Map<String, bool>.from(
-                                        radarOptions.value,
-                                      );
+                                      final newOptions =
+                                          Map<RadarMode, bool>.from(
+                                            radarOptions.value,
+                                          );
                                       newOptions[key] = newValue ?? false;
                                       radarOptions.value = newOptions;
                                     },
@@ -111,13 +122,49 @@ class SearchConditionPage extends HookConsumerWidget {
                           ),
                         ),
                         const Divider(height: 1, indent: 16, endIndent: 16),
-                        ListTile(
-                          leading: const Icon(Icons.timer_outlined),
-                          title: const Text("かかる時間"),
-                          trailing: Text(
-                            "約 15 分", // TODO: 動的に計算
-                            style: Theme.of(context).textTheme.bodyLarge,
-                          ),
+                        route.when(
+                          data: (routeData) {
+                            if (routeData == null) {
+                              return ListTile(
+                                leading: const Icon(Icons.timer_outlined),
+                                title: const Text("かかる時間"),
+                                trailing:
+                                    LoadingAnimationWidget.progressiveDots(
+                                      color:
+                                          Theme.of(context).colorScheme.primary,
+                                      size: 24,
+                                    ),
+                              );
+                            }
+                            return ListTile(
+                              leading: const Icon(Icons.timer_outlined),
+                              title: const Text("かかる時間"),
+                              trailing: Text(
+                                "約 ${(routeData.distance / 80).round()} 分 ~", //不動産広告基準
+                                style: Theme.of(context).textTheme.bodyLarge,
+                              ),
+                            );
+                          },
+                          error: (error, stackTrace) {
+                            return ListTile(
+                              leading: const Icon(Icons.timer_outlined),
+                              title: const Text("かかる時間"),
+                              trailing: Text(
+                                "エラー",
+                                style: Theme.of(context).textTheme.bodyLarge,
+                              ),
+                            );
+                          },
+                          loading: () {
+                            return ListTile(
+                              leading: const Icon(Icons.timer_outlined),
+                              title: const Text("かかる時間"),
+                              trailing: LoadingAnimationWidget.progressiveDots(
+                                color: Theme.of(context).colorScheme.primary,
+                                size: 24,
+                              ),
+                            );
+                          },
                         ),
                       ],
                     ),
@@ -134,7 +181,13 @@ class SearchConditionPage extends HookConsumerWidget {
               tag: "radar",
               child: SearchStartButton(
                 onPressed: () {
-                  // TODO: 探索開始処理
+                  ref
+                      .read(currentLocationProvider.notifier)
+                      .continuousGetLocation();
+
+                  Navigator.of(
+                    context,
+                  ).pushReplacementNamed(AppRoute.radar.path);
                 },
               ),
             ),

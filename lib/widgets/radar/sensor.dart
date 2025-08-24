@@ -7,7 +7,7 @@ class Sensor extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    return SensorStick(radarDiameter: radarDiameter);
+    return Stack(children: [SensorStick(radarDiameter: radarDiameter)]);
   }
 }
 

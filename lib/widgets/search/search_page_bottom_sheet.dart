@@ -79,6 +79,7 @@ class SearchPageBottomSheet extends HookConsumerWidget {
           );
         }
       }
+      return null;
     }, [focusPlaceIndex]);
 
     return DraggableScrollableSheet(
