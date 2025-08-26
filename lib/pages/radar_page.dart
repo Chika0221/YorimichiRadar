@@ -15,6 +15,7 @@ import 'package:yorimichi_radar/state/focus_place_index_provider.dart';
 import 'package:yorimichi_radar/state/search_condition_provider.dart';
 import 'package:yorimichi_radar/state/search_places_provider.dart';
 import 'package:yorimichi_radar/state/sensor_animation_provider.dart';
+import 'package:yorimichi_radar/state/taken_time_provider.dart';
 import 'package:yorimichi_radar/widgets/radar/radar_circle.dart';
 import 'package:yorimichi_radar/widgets/radar/select_mode_button.dart';
 
@@ -23,6 +24,8 @@ class RadarPage extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     useEffect(() {
+      ref.read(takenTimeProvider.notifier).setStartTime();
+
       return () {
         ref.read(currentLocationProvider.notifier).endSubscription();
       };
@@ -33,14 +36,17 @@ class RadarPage extends HookConsumerWidget {
     final currentLocationAsync = ref.watch(currentLocationProvider);
     final selectRadar = ref.read(selectRadarProvider);
 
-    final radarMode = useState(selectRadar.keys.first);
+    final enabledRadars = useMemoized(
+      () =>
+          selectRadar.entries.where((e) => e.value).map((e) => e.key).toList(),
+      [selectRadar],
+    );
+    final radarMode = useState(enabledRadars.first);
 
-    // Listen for location changes to trigger navigation as a side-effect
     ref.listen<AsyncValue<LatLng?>>(currentLocationProvider, (previous, next) {
       final position = next.value;
       final places = searchPlacesAsync.value;
 
-      // Ensure all data is available before proceeding
       if (position == null ||
           places == null ||
           focusPlaceIndex == null ||
@@ -59,11 +65,10 @@ class RadarPage extends HookConsumerWidget {
 
       ref
           .read(sensorAnimationProvider.notifier)
-          .startWave(
-            SensorSetting(Duration(milliseconds: distanceInMeters.toInt())),
-          );
+          .startWave(SensorSetting(Duration(milliseconds: 100)));
 
       if (distanceInMeters < 100 && context.mounted) {
+        ref.read(takenTimeProvider.notifier).calculationTakenTime();
         Navigator.of(context).pushReplacementNamed(AppRoute.result.path);
       }
     });

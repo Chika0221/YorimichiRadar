@@ -9,6 +9,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 // Project imports:
 import 'package:yorimichi_radar/state/focus_place_index_provider.dart';
 import 'package:yorimichi_radar/state/search_places_provider.dart';
+import 'package:yorimichi_radar/state/taken_time_provider.dart';
 
 class ResultPage extends HookConsumerWidget {
   const ResultPage({super.key});
@@ -18,7 +19,6 @@ class ResultPage extends HookConsumerWidget {
     final controller = useMemoized(
       () => ConfettiController(duration: const Duration(seconds: 5)),
     );
-
     useEffect(() {
       controller.play();
       return controller.dispose;
@@ -30,6 +30,7 @@ class ResultPage extends HookConsumerWidget {
         (places != null && index != null && index < places.length)
             ? places[index].displayName.text
             : null;
+    final takenTime = ref.watch(takenTimeProvider);
 
     return Scaffold(
       appBar: AppBar(
@@ -66,6 +67,12 @@ class ResultPage extends HookConsumerWidget {
                       textAlign: TextAlign.center,
                     ),
                   ],
+                  const SizedBox(height: 24),
+                  Text(
+                    "かかった時間: ${takenTime.round()} 秒",
+                    style: Theme.of(context).textTheme.bodyLarge,
+                    textAlign: TextAlign.center,
+                  ),
                   const SizedBox(height: 48),
                   ElevatedButton.icon(
                     icon: const Icon(Icons.home_outlined),
