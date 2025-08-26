@@ -34,8 +34,6 @@ class Compass extends HookConsumerWidget {
 
         final radianAngle = degreesAngle * (pi / 180);
 
-        final radianCompassHeading = compassHeading * (pi / 180);
-
         return Transform.rotate(
           angle: radianAngle,
           child: Center(

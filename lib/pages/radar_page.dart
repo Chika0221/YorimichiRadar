@@ -5,6 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:latlong2/latlong.dart';
+import 'package:loading_animation_widget/loading_animation_widget.dart';
 
 // Project imports:
 import 'package:yorimichi_radar/routes.dart';
@@ -12,6 +14,7 @@ import 'package:yorimichi_radar/state/current_location_provider.dart';
 import 'package:yorimichi_radar/state/focus_place_index_provider.dart';
 import 'package:yorimichi_radar/state/search_condition_provider.dart';
 import 'package:yorimichi_radar/state/search_places_provider.dart';
+import 'package:yorimichi_radar/state/sensor_animation_provider.dart';
 import 'package:yorimichi_radar/widgets/radar/radar_circle.dart';
 import 'package:yorimichi_radar/widgets/radar/select_mode_button.dart';
 
@@ -25,85 +28,139 @@ class RadarPage extends HookConsumerWidget {
       };
     }, []);
 
-    final searchPlaces = ref.watch(searchPlacesProvider);
+    final searchPlacesAsync = ref.watch(searchPlacesProvider);
     final focusPlaceIndex = ref.watch(focusPlaceIndexProvider);
-    final currentLocation = ref.watch(currentLocationProvider);
+    final currentLocationAsync = ref.watch(currentLocationProvider);
     final selectRadar = ref.read(selectRadarProvider);
 
     final radarMode = useState(selectRadar.keys.first);
 
-    final place = searchPlaces.when(
-      data: (place) => place[focusPlaceIndex!],
-      error: (error, stackTrace) => null,
-      loading: () => null,
-    );
-    if (place == null) {
-      return const Scaffold(body: Center(child: Text("場所が見つかりませんでした。")));
+    // Listen for location changes to trigger navigation as a side-effect
+    ref.listen<AsyncValue<LatLng?>>(currentLocationProvider, (previous, next) {
+      final position = next.value;
+      final places = searchPlacesAsync.value;
+
+      // Ensure all data is available before proceeding
+      if (position == null ||
+          places == null ||
+          focusPlaceIndex == null ||
+          focusPlaceIndex >= places.length) {
+        return;
+      }
+      final place = places[focusPlaceIndex];
+      if (place.location == null) return;
+
+      final distanceInMeters = Geolocator.distanceBetween(
+        position.latitude,
+        position.longitude,
+        place.location!.latitude,
+        place.location!.longitude,
+      );
+
+      ref
+          .read(sensorAnimationProvider.notifier)
+          .startWave(
+            SensorSetting(Duration(milliseconds: distanceInMeters.toInt())),
+          );
+
+      if (distanceInMeters < 100 && context.mounted) {
+        Navigator.of(context).pushReplacementNamed(AppRoute.result.path);
+      }
+    });
+
+    // Handle loading states
+    if (searchPlacesAsync.isLoading || currentLocationAsync.isLoading) {
+      return Scaffold(
+        body: Center(
+          child: LoadingAnimationWidget.progressiveDots(
+            color: Theme.of(context).colorScheme.primary,
+            size: 24,
+          ),
+        ),
+      );
     }
+
+    // Handle error states
+    if (searchPlacesAsync.hasError) {
+      return Scaffold(
+        body: Center(child: Text("場所の取得に失敗しました: ${searchPlacesAsync.error}")),
+      );
+    }
+    if (currentLocationAsync.hasError) {
+      return Scaffold(
+        body: Center(
+          child: Text("現在地の取得に失敗しました: ${currentLocationAsync.error}"),
+        ),
+      );
+    }
+
+    // Handle data states
+    final places = searchPlacesAsync.value;
+    final position = currentLocationAsync.value;
+
+    if (places == null ||
+        focusPlaceIndex == null ||
+        focusPlaceIndex >= places.length) {
+      return const Scaffold(body: Center(child: Text("表示する場所が見つかりませんでした。")));
+    }
+    final place = places[focusPlaceIndex];
+
+    if (position == null || place.location == null) {
+      return Scaffold(
+        appBar: AppBar(title: Text(place.displayName.text), centerTitle: true),
+        body: const Center(child: Text("現在地または目的地の位置情報が取得できません。")),
+      );
+    }
+
+    final double distanceInMeters = Geolocator.distanceBetween(
+      position.latitude,
+      position.longitude,
+      place.location!.latitude,
+      place.location!.longitude,
+    );
 
     return Scaffold(
       appBar: AppBar(title: Text(place.displayName.text), centerTitle: true),
       body: Center(
-        child: currentLocation.when(
-          data: (data) {
-            final double distanceInMeters = Geolocator.distanceBetween(
-              data!.latitude,
-              data.longitude,
-              place.location!.latitude,
-              place.location!.longitude,
-            );
-            if (distanceInMeters < 100) {
-              Navigator.of(context).pushNamed(AppRoute.result.path);
-            }
-            return Column(
-              children: [
-                Spacer(flex: 1),
-                Text.rich(
+        child: Column(
+          children: [
+            const Spacer(flex: 1),
+            Text.rich(
+              TextSpan(
+                style: Theme.of(context).textTheme.headlineMedium,
+                children: <TextSpan>[
+                  const TextSpan(text: 'あと'),
+                  // 数値の部分だけ太字にする
                   TextSpan(
-                    style: Theme.of(context).textTheme.headlineMedium,
-                    children: <TextSpan>[
-                      const TextSpan(text: 'あと'),
-                      // 数値の部分だけ太字にする
-                      TextSpan(
-                        text: '${distanceInMeters.round()}',
-                        style: Theme.of(
-                          context,
-                        ).textTheme.headlineLarge?.copyWith(
-                          fontWeight: FontWeight.bold,
-                          color: Theme.of(context).colorScheme.tertiary,
-                        ),
-                      ),
-                      const TextSpan(text: 'm'),
-                    ],
+                    text: '${distanceInMeters.round()}',
+                    style: Theme.of(context).textTheme.headlineLarge?.copyWith(
+                      fontWeight: FontWeight.bold,
+                      color: Theme.of(context).colorScheme.tertiary,
+                    ),
                   ),
-                ),
-                Spacer(flex: 1),
-                RadarCircle(
-                  mode: radarMode.value,
-                  currentLocation: data,
-                  place: place,
-                ),
-                Spacer(flex: 2),
-                SelectModeButton(radarMode: radarMode),
-                const SizedBox(height: 16),
-                // OutlinedButton(
-                //   onPressed: () {
-                //     ref
-                //         .read(sensorAnimationProvider.notifier)
-                //         .startWave(SensorSetting(Duration(milliseconds: 100)));
-                //   },
-                //   child: Text("センサ"),
-                // ),
-                Spacer(flex: 2),
-              ],
-            );
-          },
-          error: (error, stackTrace) {
-            return Text("$error");
-          },
-          loading: () {
-            return CircularProgressIndicator();
-          },
+                  const TextSpan(text: 'm'),
+                ],
+              ),
+            ),
+            const Spacer(flex: 1),
+            RadarCircle(
+              mode: radarMode.value,
+              currentLocation: position,
+              place: place,
+            ),
+            const Spacer(flex: 2),
+            SelectModeButton(radarMode: radarMode),
+            const SizedBox(height: 16),
+            // OutlinedButton(
+            //   onPressed: () {
+            //     ref
+            //         .read(sensorAnimationProvider.notifier)
+            //         .startWave(SensorSetting(Duration(milliseconds: 100)));
+            //   },
+            //   child: Text("センサ"),
+            // ),
+            const Spacer(flex: 2),
+          ],
         ),
       ),
     );

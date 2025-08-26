@@ -189,6 +189,7 @@ class SearchConditionPage extends HookConsumerWidget {
                     context,
                   ).pushReplacementNamed(AppRoute.radar.path);
                 },
+                // onPressed: null,
               ),
             ),
           ),
