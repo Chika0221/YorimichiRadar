@@ -23,9 +23,11 @@ class RadarPage extends HookConsumerWidget {
   const RadarPage({super.key});
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    late LatLng startPoint;
+
     useEffect(() {
       ref.read(takenTimeProvider.notifier).setStartTime();
-
+      startPoint = ref.read(currentLocationProvider).value!;
       return () {
         ref.read(currentLocationProvider.notifier).endSubscription();
       };
@@ -63,17 +65,38 @@ class RadarPage extends HookConsumerWidget {
         place.location!.longitude,
       );
 
-      ref
-          .read(sensorAnimationProvider.notifier)
-          .startWave(SensorSetting(Duration(milliseconds: 100)));
+      const double arrivalDistance = 100.0;
+      const double animationStartDistance = 500.0; // 500m以内になったらアニメーションを開始
 
-      if (distanceInMeters < 100 && context.mounted) {
+      if (distanceInMeters < animationStartDistance) {
+        const double maxInterval = 1500; // ms, 最も遅いアニメーション間隔
+        const double minInterval = 200; // ms, 最も速いアニメーション間隔
+
+        // 距離をアニメーション範囲内にクランプする
+        final clampedDistance = distanceInMeters.clamp(
+          arrivalDistance,
+          animationStartDistance,
+        );
+
+        // 進捗を計算 (0.0で到着, 1.0でアニメーション開始距離)
+        final progress =
+            (clampedDistance - arrivalDistance) /
+            (animationStartDistance - arrivalDistance);
+
+        // 進捗に基づいてアニメーション間隔を補間
+        final interval = minInterval + (maxInterval - minInterval) * progress;
+
+        ref
+            .read(sensorAnimationProvider.notifier)
+            .startWave(SensorSetting(Duration(milliseconds: interval.round())));
+      }
+
+      if (distanceInMeters < arrivalDistance && context.mounted) {
         ref.read(takenTimeProvider.notifier).calculationTakenTime();
-        Navigator.of(context).pushReplacementNamed(AppRoute.result.path);
+        Navigator.of(context).pushReplacementNamed(AppRoute.result.path, arguments: startPoint);
       }
     });
 
-    // Handle loading states
     if (searchPlacesAsync.isLoading || currentLocationAsync.isLoading) {
       return Scaffold(
         body: Center(
@@ -85,7 +108,6 @@ class RadarPage extends HookConsumerWidget {
       );
     }
 
-    // Handle error states
     if (searchPlacesAsync.hasError) {
       return Scaffold(
         body: Center(child: Text("場所の取得に失敗しました: ${searchPlacesAsync.error}")),
@@ -99,7 +121,6 @@ class RadarPage extends HookConsumerWidget {
       );
     }
 
-    // Handle data states
     final places = searchPlacesAsync.value;
     final position = currentLocationAsync.value;
 

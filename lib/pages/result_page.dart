@@ -5,14 +5,18 @@ import 'package:flutter/material.dart';
 import 'package:confetti/confetti.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:latlong2/latlong.dart';
 
 // Project imports:
 import 'package:yorimichi_radar/state/focus_place_index_provider.dart';
 import 'package:yorimichi_radar/state/search_places_provider.dart';
 import 'package:yorimichi_radar/state/taken_time_provider.dart';
+import 'package:yorimichi_radar/widgets/result/result_map.dart';
 
 class ResultPage extends HookConsumerWidget {
-  const ResultPage({super.key});
+  const ResultPage({super.key, required this.startPoint});
+
+  final LatLng startPoint;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -34,9 +38,8 @@ class ResultPage extends HookConsumerWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text("目的地に到着"),
+        title: const Text("目的地に到着！"),
         centerTitle: true,
-        // 戻るボタンを非表示にする
         automaticallyImplyLeading: false,
       ),
       body: Stack(
@@ -48,22 +51,18 @@ class ResultPage extends HookConsumerWidget {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
+                  ResultMap(startPoint: startPoint),
                   const Icon(
-                    Icons.flag_circle_outlined,
+                    Icons.flag_circle_rounded,
                     size: 120,
                     color: Colors.amber,
                   ),
                   const SizedBox(height: 24),
-                  Text(
-                    '目的地に到着！',
-                    style: Theme.of(context).textTheme.headlineMedium,
-                    textAlign: TextAlign.center,
-                  ),
                   if (placeName != null) ...[
                     const SizedBox(height: 8),
                     Text(
                       placeName,
-                      style: Theme.of(context).textTheme.titleLarge,
+                      style: Theme.of(context).textTheme.headlineLarge,
                       textAlign: TextAlign.center,
                     ),
                   ],
@@ -74,14 +73,12 @@ class ResultPage extends HookConsumerWidget {
                     textAlign: TextAlign.center,
                   ),
                   const SizedBox(height: 48),
-                  ElevatedButton.icon(
+                  FilledButton.tonalIcon(
                     icon: const Icon(Icons.home_outlined),
                     label: const Text('新しい寄り道を探す'),
                     onPressed: () {
-                      // 検索状態をリセット
                       ref.invalidate(searchPlacesProvider);
                       ref.invalidate(focusPlaceIndexProvider);
-                      // ナビゲーションスタックをクリアして最初の画面に戻る
                       Navigator.of(context).popUntil((route) => route.isFirst);
                     },
                   ),
@@ -99,6 +96,17 @@ class ResultPage extends HookConsumerWidget {
               Colors.pink,
               Colors.orange,
               Colors.purple,
+              Colors.amber,
+              Colors.red,
+              Colors.lightGreen,
+              Colors.lightBlue,
+              Colors.deepOrange,
+              Colors.deepPurple,
+              Colors.teal,
+              Colors.cyan,
+              Colors.brown,
+              Colors.grey,
+              Colors.indigo,
             ],
           ),
         ],
