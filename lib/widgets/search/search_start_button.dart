@@ -10,7 +10,7 @@ import 'package:yorimichi_radar/main.dart';
 class SearchStartButton extends HookConsumerWidget {
   const SearchStartButton({super.key, required this.onPressed});
 
-  final void Function() onPressed;
+  final void Function()? onPressed;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

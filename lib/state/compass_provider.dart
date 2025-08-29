@@ -2,7 +2,7 @@
 import 'package:flutter_compass/flutter_compass.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-class CompassNotifier extends StreamNotifier<double> {
+class CompassNotifier extends AutoDisposeStreamNotifier<double> {
   @override
   Stream<double> build() {
     return getAngle();
@@ -15,6 +15,7 @@ class CompassNotifier extends StreamNotifier<double> {
   }
 }
 
-final CompassProvider = StreamNotifierProvider<CompassNotifier, double>(
-  CompassNotifier.new,
-);
+final CompassProvider =
+    AutoDisposeStreamNotifierProvider<CompassNotifier, double>(
+      CompassNotifier.new,
+    );

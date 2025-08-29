@@ -2,7 +2,6 @@
 import 'package:flutter/material.dart';
 
 // Package imports:
-import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
 
@@ -26,20 +25,10 @@ class SearchConditionPage extends HookConsumerWidget {
     final searchPlaces = ref.watch(searchPlacesProvider);
     final place = searchPlaces.value![focusPlaceIndex ?? 0];
 
-    final radarOptions = useState({
-      RadarMode.sensor: true,
-      RadarMode.compass: false,
-    });
+    final radarOptions = ref.watch(selectRadarProvider);
     final route = ref.watch(routeProvider);
 
     final currentLocation = ref.watch(currentLocationProvider);
-
-    useEffect(() {
-      radarOptions.addListener(() {
-        ref.read(selectRadarProvider.notifier).state = radarOptions.value;
-      });
-      return null;
-    }, []);
 
     return currentLocation.when(
       data: (location) {
@@ -96,75 +85,62 @@ class SearchConditionPage extends HookConsumerWidget {
                             leading: const Icon(Icons.radar),
                             title: const Text("つかうレーダー"),
                             children:
-                                radarOptions.value.keys.map((key) {
+                                radarOptions.keys.map((key) {
                                   return CheckboxListTile(
                                     title: Text(key.text),
-                                    value: radarOptions.value[key],
+                                    value: radarOptions[key],
                                     onChanged: (newValue) {
                                       final checkedCount =
-                                          radarOptions.value.values
+                                          radarOptions.values
                                               .where((v) => v)
                                               .length;
                                       if (newValue == false &&
                                           checkedCount <= 1) {
                                         return;
                                       }
-
                                       final newOptions =
                                           Map<RadarMode, bool>.from(
-                                            radarOptions.value,
+                                            radarOptions,
                                           );
                                       newOptions[key] = newValue ?? false;
-                                      radarOptions.value = newOptions;
+                                      ref
+                                          .read(selectRadarProvider.notifier)
+                                          .state = newOptions;
                                     },
                                   );
                                 }).toList(),
                           ),
                         ),
                         const Divider(height: 1, indent: 16, endIndent: 16),
-                        route.when(
-                          data: (routeData) {
-                            if (routeData == null) {
-                              return ListTile(
-                                leading: const Icon(Icons.timer_outlined),
-                                title: const Text("かかる時間"),
-                                trailing:
-                                    LoadingAnimationWidget.progressiveDots(
-                                      color:
-                                          Theme.of(context).colorScheme.primary,
-                                      size: 24,
-                                    ),
-                              );
-                            }
-                            return ListTile(
-                              leading: const Icon(Icons.timer_outlined),
-                              title: const Text("かかる時間"),
-                              trailing: Text(
+                        ListTile(
+                          leading: const Icon(Icons.timer_outlined),
+                          title: const Text("かかる時間"),
+                          trailing: route.when(
+                            data: (routeData) {
+                              if (routeData == null) {
+                                return LoadingAnimationWidget.progressiveDots(
+                                  color: Theme.of(context).colorScheme.primary,
+                                  size: 24,
+                                );
+                              }
+                              return Text(
                                 "約 ${(routeData.distance / 80).round()} 分 ~", //不動産広告基準
                                 style: Theme.of(context).textTheme.bodyLarge,
-                              ),
-                            );
-                          },
-                          error: (error, stackTrace) {
-                            return ListTile(
-                              leading: const Icon(Icons.timer_outlined),
-                              title: const Text("かかる時間"),
-                              trailing: Text(
+                              );
+                            },
+                            error: (error, stackTrace) {
+                              return Text(
                                 "エラー",
                                 style: Theme.of(context).textTheme.bodyLarge,
-                              ),
-                            );
-                          },
-                          loading: () {
-                            return ListTile(
-                              leading: const Icon(Icons.timer_outlined),
-                              title: const Text("かかる時間"),
-                              trailing: LoadingAnimationWidget.progressiveDots(
+                              );
+                            },
+                            loading: () {
+                              return LoadingAnimationWidget.progressiveDots(
                                 color: Theme.of(context).colorScheme.primary,
                                 size: 24,
-                              ),
-                            );
-                          },
+                              );
+                            },
+                          ),
                         ),
                       ],
                     ),
@@ -189,6 +165,7 @@ class SearchConditionPage extends HookConsumerWidget {
                     context,
                   ).pushReplacementNamed(AppRoute.radar.path);
                 },
+                // onPressed: null,
               ),
             ),
           ),

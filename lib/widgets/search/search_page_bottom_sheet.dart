@@ -222,6 +222,14 @@ class SearchPageBottomSheet extends HookConsumerWidget {
             const SizedBox(height: 16),
             searchPlaces.when(
               data: (data) {
+                if (data.isEmpty) {
+                  return SizedBox(
+                    height: 120,
+                    width: double.infinity,
+                    child: Center(child: Text("検索結果がありません")),
+                  );
+                }
+
                 return CarouselSlider.builder(
                   carouselController: carouselController,
                   itemCount: data.length,

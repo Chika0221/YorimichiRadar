@@ -1,6 +1,9 @@
 // Flutter imports:
 import 'package:flutter/material.dart';
 
+// Package imports:
+import 'package:latlong2/latlong.dart';
+
 // Project imports:
 import 'package:yorimichi_radar/main_page.dart';
 import 'package:yorimichi_radar/pages/radar_page.dart';
@@ -27,5 +30,8 @@ final Map<String, Widget Function(BuildContext)> routes = {
   AppRoute.radar.path: (context) => const RadarPage(),
   AppRoute.search.path: (context) => const SearchPage(),
   AppRoute.searchCondition.path: (context) => const SearchConditionPage(),
-  AppRoute.result.path: (context) => const ResultPage(),
+  AppRoute.result.path: (context) {
+    final startPoint = ModalRoute.of(context)!.settings.arguments as LatLng;
+    return ResultPage(startPoint: startPoint);
+  },
 };

@@ -33,12 +33,12 @@ _Place _$PlaceFromJson(Map<String, dynamic> json) => _Place(
 
 Map<String, dynamic> _$PlaceToJson(_Place instance) => <String, dynamic>{
   'id': instance.id,
-  'displayName': instance.displayName,
-  'primaryTypeDisplayName': instance.primaryTypeDisplayName,
+  'displayName': instance.displayName.toJson(),
+  'primaryTypeDisplayName': instance.primaryTypeDisplayName?.toJson(),
   'shortFormattedAddress': instance.shortFormattedAddress,
   'location': const LatLngConverter().toJson(instance.location),
   'rating': instance.rating,
-  'regularOpeningHours': instance.regularOpeningHours,
+  'regularOpeningHours': instance.regularOpeningHours?.toJson(),
   'googleMapsUri': instance.googleMapsUri,
 };
 

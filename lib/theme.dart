@@ -345,7 +345,7 @@ class MaterialTheme {
     //    displayColor: colorScheme.onSurface,
     //  ),
     fontFamily: "Boku2",
-    scaffoldBackgroundColor: colorScheme.background,
+    scaffoldBackgroundColor: colorScheme.surface,
     canvasColor: colorScheme.surface,
   );
 

@@ -17,7 +17,7 @@ _RouteData _$RouteDataFromJson(Map<String, dynamic> json) => _RouteData(
 Map<String, dynamic> _$RouteDataToJson(_RouteData instance) =>
     <String, dynamic>{
       'weight_name': instance.weightName,
-      'geometry': instance.geometry,
+      'geometry': instance.geometry.toJson(),
       'weight': instance.weight,
       'duration': instance.duration,
       'distance': instance.distance,
