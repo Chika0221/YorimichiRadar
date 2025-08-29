@@ -22,7 +22,7 @@ class MyApp extends HookConsumerWidget {
     TextTheme textTheme = Theme.of(context).textTheme;
     MaterialTheme theme = MaterialTheme(textTheme);
     return MaterialApp(
-      themeMode: ThemeMode.light,
+      themeMode: ThemeMode.system,
       theme: theme.light(),
       darkTheme: theme.dark(),
       initialRoute: '/',

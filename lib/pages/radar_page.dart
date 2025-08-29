@@ -19,6 +19,15 @@ import 'package:yorimichi_radar/state/taken_time_provider.dart';
 import 'package:yorimichi_radar/widgets/radar/radar_circle.dart';
 import 'package:yorimichi_radar/widgets/radar/select_mode_button.dart';
 
+Future<void> runWaveAnimation(WidgetRef ref, int count) async {
+  for (int i = 0; i < count; i++) {
+    ref
+        .read(sensorAnimationProvider.notifier)
+        .startWave(const SensorSetting(Duration(milliseconds: 100)));
+    await Future.delayed(const Duration(milliseconds: 100));
+  }
+}
+
 class RadarPage extends HookConsumerWidget {
   const RadarPage({super.key});
   @override
@@ -46,10 +55,12 @@ class RadarPage extends HookConsumerWidget {
     final radarMode = useState(enabledRadars.first);
 
     ref.listen<AsyncValue<LatLng?>>(currentLocationProvider, (previous, next) {
-      final position = next.value;
+      final nextPosition = next.value;
+      final previousPositon = previous?.value ?? next.value;
       final places = searchPlacesAsync.value;
 
-      if (position == null ||
+      if (nextPosition == null ||
+          previousPositon == null ||
           places == null ||
           focusPlaceIndex == null ||
           focusPlaceIndex >= places.length) {
@@ -58,42 +69,32 @@ class RadarPage extends HookConsumerWidget {
       final place = places[focusPlaceIndex];
       if (place.location == null) return;
 
-      final distanceInMeters = Geolocator.distanceBetween(
-        position.latitude,
-        position.longitude,
+      final previousDistanceInMeters = Geolocator.distanceBetween(
+        previousPositon.latitude,
+        previousPositon.longitude,
         place.location!.latitude,
         place.location!.longitude,
       );
 
-      const double arrivalDistance = 100.0;
-      const double animationStartDistance = 500.0; // 500m以内になったらアニメーションを開始
+      final nextDistanceInMeters = Geolocator.distanceBetween(
+        nextPosition.latitude,
+        nextPosition.longitude,
+        place.location!.latitude,
+        place.location!.longitude,
+      );
 
-      if (distanceInMeters < animationStartDistance) {
-        const double maxInterval = 1500; // ms, 最も遅いアニメーション間隔
-        const double minInterval = 200; // ms, 最も速いアニメーション間隔
+      final remainingDistanceDecreaseQuantity =
+          previousDistanceInMeters - nextDistanceInMeters;
 
-        // 距離をアニメーション範囲内にクランプする
-        final clampedDistance = distanceInMeters.clamp(
-          arrivalDistance,
-          animationStartDistance,
-        );
-
-        // 進捗を計算 (0.0で到着, 1.0でアニメーション開始距離)
-        final progress =
-            (clampedDistance - arrivalDistance) /
-            (animationStartDistance - arrivalDistance);
-
-        // 進捗に基づいてアニメーション間隔を補間
-        final interval = minInterval + (maxInterval - minInterval) * progress;
-
-        ref
-            .read(sensorAnimationProvider.notifier)
-            .startWave(SensorSetting(Duration(milliseconds: interval.round())));
+      if (remainingDistanceDecreaseQuantity > 0) {
+        runWaveAnimation(ref, (remainingDistanceDecreaseQuantity ~/ 3));
       }
 
-      if (distanceInMeters < arrivalDistance && context.mounted) {
+      if (nextDistanceInMeters < 50) {
         ref.read(takenTimeProvider.notifier).calculationTakenTime();
-        Navigator.of(context).pushReplacementNamed(AppRoute.result.path, arguments: startPoint);
+        Navigator.of(
+          context,
+        ).pushReplacementNamed(AppRoute.result.path, arguments: startPoint);
       }
     });
 
