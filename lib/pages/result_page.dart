@@ -73,8 +73,6 @@ class ResultPage extends HookConsumerWidget {
                   endPlace: place,
                 );
 
-                print(record);
-
                 return Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [

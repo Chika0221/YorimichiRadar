@@ -19,7 +19,7 @@ Map<String, dynamic> _$RecordToJson(_Record instance) => <String, dynamic>{
   'id': instance.id,
   'createAt': instance.createAt.toIso8601String(),
   'takenTime': instance.takenTime,
-  'route': instance.route.toJson().toString(),
-  'startLocation': instance.startLocation.toJson().toString(),
-  'endPlace': instance.endPlace.toJson().toString(),
+  'route': instance.route.toJson(),
+  'startLocation': instance.startLocation.toJson(),
+  'endPlace': instance.endPlace.toJson(),
 };
