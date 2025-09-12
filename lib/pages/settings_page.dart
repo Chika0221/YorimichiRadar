@@ -24,35 +24,35 @@ class SettingsPage extends HookConsumerWidget {
               isDarkMode.value = value;
             },
           ),
-          SwitchListTile(
-            title: const Text("通知"),
-            value: areNotificationsEnabled.value,
-            onChanged: (value) {
-              areNotificationsEnabled.value = value;
-            },
-          ),
+          // SwitchListTile(
+          //   title: const Text("通知"),
+          //   value: areNotificationsEnabled.value,
+          //   onChanged: (value) {
+          //     areNotificationsEnabled.value = value;
+          //   },
+          // ),
           const Divider(),
-          _buildSectionHeader(context, "一般"),
-          ListTile(
-            title: const Text("コンパスの調整"),
-            leading: const Icon(Icons.explore_outlined),
-            onTap: () {
-              ScaffoldMessenger.of(context).showSnackBar(
-                const SnackBar(
-                  content: Text("コンパスを調整しました。"),
-                  duration: Duration(seconds: 2),
-                ),
-              );
-            },
-          ),
-          ListTile(
-            title: const Text("履歴を消去"),
-            leading: const Icon(Icons.delete_outline),
-            onTap: () {
-              _showClearHistoryDialog(context);
-            },
-          ),
-          const Divider(),
+          // _buildSectionHeader(context, "一般"),
+          // ListTile(
+          //   title: const Text("コンパスの調整"),
+          //   leading: const Icon(Icons.explore_outlined),
+          //   onTap: () {
+          //     ScaffoldMessenger.of(context).showSnackBar(
+          //       const SnackBar(
+          //         content: Text("コンパスを調整しました。"),
+          //         duration: Duration(seconds: 2),
+          //       ),
+          //     );
+          //   },
+          // ),
+          // ListTile(
+          //   title: const Text("履歴を消去"),
+          //   leading: const Icon(Icons.delete_outline),
+          //   onTap: () {
+          //     _showClearHistoryDialog(context);
+          //   },
+          // ),
+          // const Divider(),
           _buildSectionHeader(context, "このアプリについて"),
           const ListTile(
             title: Text("バージョン"),
@@ -63,7 +63,7 @@ class SettingsPage extends HookConsumerWidget {
             title: const Text("ライセンス"),
             leading: const Icon(Icons.description_outlined),
             onTap: () {
-              showLicensePage(context: context);
+              showLicensePage(applicationName: "寄り道レーダー", context: context);
             },
           ),
         ],

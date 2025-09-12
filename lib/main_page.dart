@@ -33,7 +33,7 @@ class MainPage extends HookConsumerWidget {
         index: pageIndex,
         children: const [SearchStartPage(), HistoryPage()],
       ),
-      bottomNavigationBar: const CustomNaviBar(),
+      // bottomNavigationBar: const CustomNaviBar(),
     );
   }
 }
