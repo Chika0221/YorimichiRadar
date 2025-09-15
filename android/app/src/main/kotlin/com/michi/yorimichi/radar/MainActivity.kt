@@ -1,4 +1,4 @@
-package com.example.yorimichi_radar
+package com.michi.yorimichi.radar
 
 import io.flutter.embedding.android.FlutterActivity
 
