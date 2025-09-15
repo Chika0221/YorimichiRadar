@@ -9,7 +9,6 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
 
 // Project imports:
-import 'package:yorimichi_radar/models/place.dart';
 import 'package:yorimichi_radar/state/current_location_provider.dart';
 import 'package:yorimichi_radar/state/focus_place_index_provider.dart';
 import 'package:yorimichi_radar/state/search_condition_provider.dart';
