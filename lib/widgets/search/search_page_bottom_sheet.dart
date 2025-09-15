@@ -84,7 +84,7 @@ class SearchPageBottomSheet extends HookConsumerWidget {
 
     return DraggableScrollableSheet(
       controller: sheetController,
-      initialChildSize: minChildSize,
+      initialChildSize: 0.3,
       minChildSize: minChildSize,
       maxChildSize: maxChildSize,
       expand: false,
@@ -99,10 +99,6 @@ class SearchPageBottomSheet extends HookConsumerWidget {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
-                  IconButton(
-                    onPressed: () {},
-                    icon: const Icon(Icons.tune_rounded),
-                  ),
                   IconButton.filledTonal(
                     icon: const Icon(Icons.fullscreen_rounded),
                     onPressed: () {
